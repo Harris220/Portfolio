@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathis Germanaz — Dev & Cybersécurité</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0c0f;
+    --surface: #111418;
+    --surface2: #181c22;
+    --border: #1e2530;
+    --accent: #00e5a0;
+    --accent2: #0099ff;
+    --text: #e8edf3;
+    --muted: #6b7585;
+    --danger: #ff4d6d;
+    --font-head: 'Syne', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* GRID NOISE BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10,12,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: var(--font-head);
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 100px 2rem 60px;
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 56px;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(0,229,160,0.3);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-name {
+    font-family: var(--font-head);
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -2px;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-name span { color: var(--accent); }
+
+  .hero-sub {
+    font-family: var(--font-head);
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 400;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .hero-desc {
+    max-width: 520px;
+    color: #8a95a3;
+    margin-bottom: 2.5rem;
+    font-size: 13px;
+    line-height: 1.9;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    font-weight: 700;
+  }
+
+  .btn-primary:hover {
+    background: #00ffb3;
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid rgba(0,229,160,0.4);
+  }
+
+  .btn-outline:hover {
+    background: rgba(0,229,160,0.08);
+    border-color: var(--accent);
+  }
+
+  .hero-status {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .status-dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* SECTION HEADERS */
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: var(--font-head);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--text);
+    margin-bottom: 3rem;
+  }
+
+  /* SKILLS GRID */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+
+  .skill-card {
+    background: var(--surface);
+    padding: 1.5rem;
+    transition: background 0.2s;
+  }
+
+  .skill-card:hover { background: var(--surface2); }
+
+  .skill-category {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .skill-tag {
+    font-size: 11px;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    color: #8a95a3;
+    border-radius: 2px;
+    transition: all 0.15s;
+  }
+
+  .skill-tag:hover {
+    border-color: rgba(0,229,160,0.4);
+    color: var(--accent);
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.35rem;
+    top: 7px;
+    width: 8px; height: 8px;
+    border: 1px solid var(--accent);
+    background: var(--bg);
+    border-radius: 50%;
+  }
+
+  .timeline-meta {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-role {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-company {
+    font-size: 13px;
+    color: var(--accent2);
+    margin-bottom: 0.75rem;
+  }
+
+  .timeline-details {
+    list-style: none;
+  }
+
+  .timeline-details li {
+    font-size: 13px;
+    color: #8a95a3;
+    padding: 3px 0;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .timeline-details li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 11px;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .project-card {
+    background: var(--surface);
+    padding: 1.5rem;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .project-card:hover { background: var(--surface2); }
+  .project-card:hover::after { transform: scaleX(1); }
+
+  .project-type {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .project-name {
+    font-family: var(--font-head);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+
+  .project-desc {
+    font-size: 12px;
+    color: #8a95a3;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .tag {
+    font-size: 10px;
+    padding: 2px 7px;
+    background: rgba(0,229,160,0.08);
+    color: var(--accent);
+    border: 1px solid rgba(0,229,160,0.2);
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  /* FORMATION */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .edu-card {
+    background: var(--surface);
+    padding: 1.5rem;
+  }
+
+  .edu-year {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+
+  .edu-degree {
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+
+  .edu-school {
+    font-size: 13px;
+    color: var(--accent2);
+  }
+
+  /* CONTACT */
+  #contact {
+    padding-bottom: 120px;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .contact-item {
+    background: var(--surface);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .contact-item:hover { background: var(--surface2); }
+
+  .contact-icon {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .contact-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+
+  .contact-value {
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 2rem;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* SCROLL ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* CURSOR ACCENT */
+  .accent-line {
+    width: 60px;
+    height: 2px;
+    background: var(--accent);
+    margin-bottom: 3rem;
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1rem; }
+    .nav-links { gap: 1rem; }
+    section { padding: 80px 1.25rem 40px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">MG_</a>
+  <ul class="nav-links">
+    <li><a href="#competences">Skills</a></li>
+    <li><a href="#experience">Expérience</a></li>
+    <li><a href="#projets">Projets</a></li>
+    <li><a href="#formation">Formation</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">Disponible · Juil. — Déc. 2026</div>
+  <h1 class="hero-name">Mathis<br><span>Germanaz</span></h1>
+  <p class="hero-sub">Développement · Cybersécurité</p>
+  <p class="hero-desc">
+    Étudiant à Epitech La Réunion, spécialisé en développement logiciel et sécurité des systèmes d'information.
+    Deux stages, des CTF, et une conviction : comprendre comment les systèmes sont compromis pour mieux les défendre.
+  </p>
+  <div class="hero-cta">
+    <a href="mailto:mathis.germanaz@epitech.eu" class="btn btn-primary">Contacter</a>
+    <a href="#projets" class="btn btn-outline">Voir les projets</a>
+  </div>
+  <div class="hero-status">
+    <span class="status-dot"></span>
+    <span>Recherche un stage de 4 mois · La Réunion & métropole</span>
+  </div>
+</section>
+
+<!-- COMPÉTENCES -->
+<section id="competences">
+  <p class="section-label fade-up">Stack</p>
+  <h2 class="section-title fade-up">Compétences</h2>
+  <div class="skills-grid fade-up">
+    <div class="skill-card">
+      <p class="skill-category">Cybersécurité</p>
+      <ul class="skill-list">
+        <li class="skill-tag">Sécurité des SI</li>
+        <li class="skill-tag">EDR / Palo Alto</li>
+        <li class="skill-tag">Réseaux TCP/IP</li>
+        <li class="skill-tag">Admin système</li>
+        <li class="skill-tag">CTF</li>
+        <li class="skill-tag">Forensics</li>
+        <li class="skill-tag">Cryptographie</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <p class="skill-category">Développement</p>
+      <ul class="skill-list">
+        <li class="skill-tag">Langage C</li>
+        <li class="skill-tag">CSFML</li>
+        <li class="skill-tag">Delphi</li>
+        <li class="skill-tag">HTML / CSS</li>
+        <li class="skill-tag">Algorithmique</li>
+        <li class="skill-tag">Git</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <p class="skill-category">Outils & méthodes</p>
+      <ul class="skill-list">
+        <li class="skill-tag">SEO</li>
+        <li class="skill-tag">Gestion de projet</li>
+        <li class="skill-tag">Travail en équipe</li>
+        <li class="skill-tag">Anglais B2</li>
+        <li class="skill-tag">Réseaux segmentés</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EXPÉRIENCE -->
+<section id="experience">
+  <p class="section-label fade-up">Parcours</p>
+  <h2 class="section-title fade-up">Expériences professionnelles</h2>
+  <div class="timeline fade-up">
+    <div class="timeline-item">
+      <p class="timeline-meta">Juil. — Août 2025</p>
+      <h3 class="timeline-role">Stagiaire Développeur & Sécurité</h3>
+      <p class="timeline-company">Pragma-TIC · Saint-Leu, La Réunion</p>
+      <ul class="timeline-details">
+        <li>Conception et réalisation du site web de l'entreprise (HTML/CSS, optimisation SEO)</li>
+        <li>Mise en place d'un environnement de test isolé pour valider le comportement d'un EDR réseau (Palo Alto)</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <p class="timeline-meta">Juil. — Août 2023</p>
+      <h3 class="timeline-role">Stagiaire — Service informatique</h3>
+      <p class="timeline-company">Lycée A. de Saint-Exupéry · Les Avirons, La Réunion</p>
+      <ul class="timeline-details">
+        <li>Administration du parc informatique : mise à jour des serveurs et postes, gestion des incidents</li>
+        <li>Résolution d'erreurs logicielles, maintenance du réseau local</li>
+        <li>Configuration de machines, installation et déploiement de logiciels</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETS -->
+<section id="projets">
+  <p class="section-label fade-up">Labs & projets</p>
+  <h2 class="section-title fade-up">Réalisations</h2>
+  <div class="projects-grid fade-up">
+    <div class="project-card">
+      <p class="project-type">Application réseau</p>
+      <h3 class="project-name">Remote Control — Delphi</h3>
+      <p class="project-desc">
+        Conception d'une application client-serveur pour comprendre les mécanismes réseau et les vecteurs d'attaque distants. Approche orientée défense : analyse des vulnérabilités pour mieux les contrer.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Delphi</span>
+        <span class="tag">TCP/IP</span>
+        <span class="tag">Client-Serveur</span>
+        <span class="tag">Sécurité défensive</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <p class="project-type">CTF — Epitech & Guardia</p>
+      <h3 class="project-name">Capture The Flag</h3>
+      <p class="project-desc">
+        Challenges en cryptographie, forensics et exploitation réseau. Environnements de compétition avec contraintes temps réel et travail d'équipe.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Cryptographie</span>
+        <span class="tag">Forensics</span>
+        <span class="tag">Exploitation réseau</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <p class="project-type">Développement collaboratif</p>
+      <h3 class="project-name">Projets d'équipe — C / Réseaux</h3>
+      <p class="project-desc">
+        Développement collaboratif en C sur des architectures réseaux segmentées. Gestion de version Git, revue de code, coordination multi-équipes dans le cadre d'Epitech et Guardia.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Langage C</span>
+        <span class="tag">Réseaux segmentés</span>
+        <span class="tag">Git</span>
+        <span class="tag">Travail d'équipe</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <p class="project-type">Web & sécurité applicative</p>
+      <h3 class="project-name">Site web Pragma-TIC</h3>
+      <p class="project-desc">
+        Conception complète d'un site vitrine professionnel avec stratégie SEO. Intégration des contraintes de sécurité applicative web dans la démarche de développement.
+      </p>
+      <div class="project-tags">
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">SEO</span>
+        <span class="tag">Sécurité web</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATION -->
+<section id="formation">
+  <p class="section-label fade-up">Académique</p>
+  <h2 class="section-title fade-up">Formation</h2>
+  <div class="edu-grid fade-up">
+    <div class="edu-card">
+      <p class="edu-year">2025 — 2026</p>
+      <p class="edu-degree">Bachelor Informatique</p>
+      <p class="edu-school">Epitech · La Réunion</p>
+    </div>
+    <div class="edu-card">
+      <p class="edu-year">2023 — 2025</p>
+      <p class="edu-degree">Bachelor Informatique</p>
+      <p class="edu-school">Guardia Cybersecurity · Lyon</p>
+    </div>
+    <div class="edu-card">
+      <p class="edu-year">2022 — 2023</p>
+      <p class="edu-degree">Baccalauréat Général</p>
+      <p class="edu-school">Maths & Physique · Mention Bien</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label fade-up">Disponible</p>
+  <h2 class="section-title fade-up">Contact</h2>
+  <div class="contact-grid fade-up">
+    <a href="mailto:mathis.germanaz@epitech.eu" class="contact-item">
+      <div class="contact-icon">✉</div>
+      <div>
+        <p class="contact-label">Email</p>
+        <p class="contact-value">mathis.germanaz@epitech.eu</p>
+      </div>
+    </a>
+    <a href="tel:0693821030" class="contact-item">
+      <div class="contact-icon">☎</div>
+      <div>
+        <p class="contact-label">Téléphone</p>
+        <p class="contact-value">06 93 82 10 30</p>
+      </div>
+    </a>
+    <div class="contact-item">
+      <div class="contact-icon">📍</div>
+      <div>
+        <p class="contact-label">Localisation</p>
+        <p class="contact-value">Saint-André, La Réunion (97440)</p>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">🚗</div>
+      <div>
+        <p class="contact-label">Mobilité</p>
+        <p class="contact-value">Permis B · Véhiculé</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Mathis Germanaz · Étudiant Epitech La Réunion · Recherche stage Juil.–Déc. 2026</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80 * i);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
