@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathis Germanaz — Dev & Cybersécurité</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0c0f;
+    --surface: #111418;
+    --surface2: #181c22;
+    --border: #1e2530;
+    --accent: #00e5a0;
+    --accent2: #0099ff;
+    --accent3: #ff6b35;
+    --text: #e8edf3;
+    --muted: #6b7585;
+    --font-head: 'Syne', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10,12,15,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: var(--font-head);
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+  /* PAGES */
+  .page { display: none; position: relative; z-index: 1; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* SECTIONS */
+  .section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 100px 2rem 60px;
+  }
+
+  /* HERO */
+  #hero-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 56px;
+    max-width: 960px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(0,229,160,0.3);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-name {
+    font-family: var(--font-head);
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -2px;
+    margin-bottom: 0.5rem;
+  }
+  .hero-name span { color: var(--accent); }
+  .hero-sub {
+    font-family: var(--font-head);
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 400;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+  .hero-desc {
+    max-width: 540px;
+    color: #8a95a3;
+    margin-bottom: 2.5rem;
+    font-size: 13px;
+    line-height: 1.9;
+  }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary { background: var(--accent); color: #000; font-weight: 700; }
+  .btn-primary:hover { background: #00ffb3; transform: translateY(-1px); }
+  .btn-outline { background: transparent; color: var(--accent); border: 1px solid rgba(0,229,160,0.4); }
+  .btn-outline:hover { background: rgba(0,229,160,0.08); border-color: var(--accent); }
+  .hero-status {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .status-dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* SECTION HEADERS */
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: var(--font-head);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 2.5rem;
+  }
+
+  /* SKILLS GRID */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  .skill-card { background: var(--surface); padding: 1.5rem; transition: background 0.2s; }
+  .skill-card:hover { background: var(--surface2); }
+  .skill-category {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .skill-list { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tag {
+    font-size: 11px;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    color: #8a95a3;
+    border-radius: 2px;
+    transition: all 0.15s;
+  }
+  .skill-tag:hover { border-color: rgba(0,229,160,0.4); color: var(--accent); }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+  .timeline-item { position: relative; margin-bottom: 3rem; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.35rem; top: 7px;
+    width: 8px; height: 8px;
+    border: 1px solid var(--accent);
+    background: var(--bg);
+    border-radius: 50%;
+  }
+  .timeline-meta { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.25rem; }
+  .timeline-role { font-family: var(--font-head); font-size: 18px; font-weight: 700; margin-bottom: 0.25rem; }
+  .timeline-company { font-size: 13px; color: var(--accent2); margin-bottom: 0.75rem; }
+  .timeline-details { list-style: none; }
+  .timeline-details li { font-size: 13px; color: #8a95a3; padding: 3px 0 3px 1rem; position: relative; }
+  .timeline-details li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 11px; }
+
+  /* PROJECTS GRID (home) */
+  .projects-home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .project-card {
+    background: var(--surface);
+    padding: 1.5rem;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .project-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .project-card.green::after { background: var(--accent); }
+  .project-card.blue::after { background: var(--accent2); }
+  .project-card.orange::after { background: var(--accent3); }
+  .project-card:hover { background: var(--surface2); }
+  .project-card:hover::after { transform: scaleX(1); }
+  .project-type { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+  .project-name { font-family: var(--font-head); font-size: 17px; font-weight: 700; margin-bottom: 0.75rem; }
+  .project-desc { font-size: 12px; color: #8a95a3; line-height: 1.8; margin-bottom: 1rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+  .tag-green { background: rgba(0,229,160,0.08); color: var(--accent); border: 1px solid rgba(0,229,160,0.2); }
+  .tag-blue { background: rgba(0,153,255,0.08); color: var(--accent2); border: 1px solid rgba(0,153,255,0.2); }
+  .tag-orange { background: rgba(255,107,53,0.08); color: var(--accent3); border: 1px solid rgba(255,107,53,0.2); }
+  .project-arrow {
+    margin-top: 1rem;
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* EDU GRID */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .edu-card { background: var(--surface); padding: 1.5rem; }
+  .edu-year { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .edu-degree { font-family: var(--font-head); font-size: 15px; font-weight: 700; margin-bottom: 0.25rem; }
+  .edu-status { font-size: 11px; color: var(--accent3); margin-bottom: 0.25rem; }
+  .edu-school { font-size: 13px; color: var(--accent2); }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .contact-item {
+    background: var(--surface);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .contact-item:hover { background: var(--surface2); }
+  .contact-icon {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .contact-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+  .contact-value { font-size: 12px; }
+
+  /* ─── PROJECT DETAIL PAGE ─── */
+  .proj-hero {
+    padding-top: 120px;
+    padding-bottom: 60px;
+    max-width: 960px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .proj-back {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .proj-back:hover { color: var(--accent); }
+  .proj-type-badge {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 1rem;
+  }
+  .proj-title {
+    font-family: var(--font-head);
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -2px;
+    margin-bottom: 1.5rem;
+  }
+  .proj-subtitle {
+    font-size: 15px;
+    color: #8a95a3;
+    max-width: 600px;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+  .proj-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .proj-meta-item .meta-label { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+  .proj-meta-item .meta-value { font-size: 13px; }
+
+  .proj-body { max-width: 960px; margin: 0 auto; padding: 0 2rem 80px; }
+  .proj-section { margin-bottom: 3rem; }
+  .proj-section-title {
+    font-family: var(--font-head);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .proj-section p { font-size: 13px; color: #8a95a3; line-height: 1.9; margin-bottom: 0.75rem; }
+  .feat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 1rem;
+  }
+  .feat-card { background: var(--surface); padding: 1.25rem; }
+  .feat-icon { font-size: 20px; margin-bottom: 0.5rem; }
+  .feat-name { font-family: var(--font-head); font-size: 14px; font-weight: 700; margin-bottom: 0.4rem; }
+  .feat-desc { font-size: 12px; color: #8a95a3; line-height: 1.7; }
+  .code-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #8a95a3;
+    margin: 1rem 0;
+    overflow-x: auto;
+  }
+  .code-block.blue { border-left-color: var(--accent2); }
+  .code-block.orange { border-left-color: var(--accent3); }
+  .highlight { color: var(--accent); }
+  .highlight-blue { color: var(--accent2); }
+  .highlight-orange { color: var(--accent3); }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 2rem;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1rem; }
+    .nav-links { gap: 0.75rem; }
+    .section, .proj-hero, .proj-body { padding-left: 1.25rem; padding-right: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo" onclick="showPage('home')">MG_</span>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" href="#">Accueil</a></li>
+    <li><a onclick="scrollTo_('#projets')" href="#">Projets</a></li>
+    <li><a onclick="scrollTo_('#formation')" href="#">Formation</a></li>
+    <li><a onclick="scrollTo_('#contact')" href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════ HOME PAGE ══════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <div id="hero-section">
+    <div class="hero-tag">Disponible · Juil. — Déc. 2026</div>
+    <h1 class="hero-name">Mathis<br><span>Germanaz</span></h1>
+    <p class="hero-sub">Développement · Cybersécurité</p>
+    <p class="hero-desc">
+      Étudiant à Epitech La Réunion, spécialisé en développement logiciel et sécurité offensive/défensive.
+      Deux stages, des CTF sur Root-Me, et une conviction : comprendre comment les systèmes sont compromis pour mieux les défendre.
+    </p>
+    <div class="hero-cta">
+      <a href="mailto:mathis.germanaz@epitech.eu" class="btn btn-primary">Contacter</a>
+      <span class="btn btn-outline" onclick="scrollTo_('#projets')">Voir les projets</span>
+    </div>
+    <div class="hero-status">
+      <span class="status-dot"></span>
+      <span>Recherche un stage de 4 mois · La Réunion & métropole</span>
+    </div>
+  </div>
+
+  <!-- COMPÉTENCES -->
+  <div class="section" id="competences">
+    <p class="section-label fade-up">Stack</p>
+    <h2 class="section-title fade-up">Compétences</h2>
+    <div class="skills-grid fade-up">
+      <div class="skill-card">
+        <p class="skill-category">Cybersécurité</p>
+        <ul class="skill-list">
+          <li class="skill-tag">Sécurité des SI</li>
+          <li class="skill-tag">EDR / Palo Alto</li>
+          <li class="skill-tag">Réseaux TCP/IP</li>
+          <li class="skill-tag">Admin système</li>
+          <li class="skill-tag">CTF / Root-Me</li>
+          <li class="skill-tag">Forensics</li>
+          <li class="skill-tag">Cryptographie</li>
+          <li class="skill-tag">Red Team</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <p class="skill-category">Développement</p>
+        <ul class="skill-list">
+          <li class="skill-tag">Langage C</li>
+          <li class="skill-tag">CSFML</li>
+          <li class="skill-tag">Delphi</li>
+          <li class="skill-tag">TypeScript</li>
+          <li class="skill-tag">Node.js</li>
+          <li class="skill-tag">Express.js</li>
+          <li class="skill-tag">MySQL</li>
+          <li class="skill-tag">REST API</li>
+          <li class="skill-tag">JWT / Auth</li>
+          <li class="skill-tag">Git</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <p class="skill-category">Outils & méthodes</p>
+        <ul class="skill-list">
+          <li class="skill-tag">SEO</li>
+          <li class="skill-tag">Gestion de projet</li>
+          <li class="skill-tag">Travail en équipe</li>
+          <li class="skill-tag">Anglais B2</li>
+          <li class="skill-tag">Réseaux segmentés</li>
+          <li class="skill-tag">Wireshark</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPÉRIENCE -->
+  <div class="section" id="experience">
+    <p class="section-label fade-up">Parcours</p>
+    <h2 class="section-title fade-up">Expériences professionnelles</h2>
+    <div class="timeline fade-up">
+      <div class="timeline-item">
+        <p class="timeline-meta">Juil. — Août 2025</p>
+        <h3 class="timeline-role">Stagiaire Développeur & Sécurité</h3>
+        <p class="timeline-company">Pragma-TIC · Saint-Leu, La Réunion</p>
+        <ul class="timeline-details">
+          <li>Conception et réalisation du site web de l'entreprise (HTML/CSS, optimisation SEO)</li>
+          <li>Mise en place d'un environnement de test isolé pour valider le comportement d'un EDR réseau (Palo Alto)</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-meta">Juil. — Août 2023</p>
+        <h3 class="timeline-role">Stagiaire — Service informatique</h3>
+        <p class="timeline-company">Lycée A. de Saint-Exupéry · Les Avirons, La Réunion</p>
+        <ul class="timeline-details">
+          <li>Administration du parc informatique : mise à jour des serveurs et postes, gestion des incidents</li>
+          <li>Résolution d'erreurs logicielles, maintenance du réseau local</li>
+          <li>Configuration de machines, installation et déploiement de logiciels</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJETS -->
+  <div class="section" id="projets">
+    <p class="section-label fade-up">Labs & projets</p>
+    <h2 class="section-title fade-up">Réalisations</h2>
+    <div class="projects-home-grid fade-up">
+
+      <div class="project-card orange" onclick="showPage('proj-rat')">
+        <p class="project-type">Sécurité offensive · Delphi</p>
+        <h3 class="project-name">Remote Access Tool</h3>
+        <p class="project-desc">
+          Application client-serveur de contrôle à distance sous Windows. Keylogger, capture d'écran, vol de cookies, contournement d'antivirus — dans un cadre de recherche red team.
+        </p>
+        <div class="project-tags">
+          <span class="tag tag-orange">Delphi</span>
+          <span class="tag tag-orange">Win32 API</span>
+          <span class="tag tag-orange">Red Team</span>
+          <span class="tag tag-orange">FUD</span>
+        </div>
+        <p class="project-arrow">Voir le projet →</p>
+      </div>
+
+      <div class="project-card blue" onclick="showPage('proj-epytodo')">
+        <p class="project-type">API REST · Node.js / TypeScript</p>
+        <h3 class="project-name">EpyTodo</h3>
+        <p class="project-desc">
+          API complète de gestion de tâches en TypeScript/Express avec authentification JWT, base MySQL, routes protégées et architecture modulaire.
+        </p>
+        <div class="project-tags">
+          <span class="tag tag-blue">TypeScript</span>
+          <span class="tag tag-blue">Node.js</span>
+          <span class="tag tag-blue">Express</span>
+          <span class="tag tag-blue">MySQL</span>
+          <span class="tag tag-blue">JWT</span>
+        </div>
+        <p class="project-arrow">Voir le projet →</p>
+      </div>
+
+      <div class="project-card green" onclick="showPage('proj-ctf')">
+        <p class="project-type">Compétition · Root-Me & Epitech</p>
+        <h3 class="project-name">CTF & Root-Me</h3>
+        <p class="project-desc">
+          Challenges en cryptographie, forensics, exploitation réseau et web sur Root-Me. Compétitions internes Epitech et Guardia en équipe.
+        </p>
+        <div class="project-tags">
+          <span class="tag tag-green">Cryptographie</span>
+          <span class="tag tag-green">Forensics</span>
+          <span class="tag tag-green">Web Exploit</span>
+          <span class="tag tag-green">Root-Me</span>
+        </div>
+        <p class="project-arrow">Voir le projet →</p>
+      </div>
+
+      <div class="project-card green" onclick="showPage('proj-tardis')">
+        <p class="project-type">Data Science · Python</p>
+        <h3 class="project-name">TARDIS</h3>
+        <p class="project-desc">
+          Nettoyage et visualisation de données de retards ferroviaires avec pandas, matplotlib et seaborn. EDA, feature engineering, préparation pour modèle prédictif.
+        </p>
+        <div class="project-tags">
+          <span class="tag tag-green">Python</span>
+          <span class="tag tag-green">pandas</span>
+          <span class="tag tag-green">matplotlib</span>
+          <span class="tag tag-green">Data Cleaning</span>
+        </div>
+        <p class="project-arrow">Voir le projet →</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FORMATION -->
+  <div class="section" id="formation">
+    <p class="section-label fade-up">Académique</p>
+    <h2 class="section-title fade-up">Formation</h2>
+    <div class="edu-grid fade-up">
+      <div class="edu-card">
+        <p class="edu-year">2025 — 2026</p>
+        <p class="edu-degree">Bachelor Informatique</p>
+        <p class="edu-school">Epitech · La Réunion</p>
+      </div>
+      <div class="edu-card">
+        <p class="edu-year">2023 — 2024</p>
+        <p class="edu-degree">1ère année Bachelor Informatique</p>
+        <p class="edu-school">Guardia Cybersecurity · Lyon</p>
+      </div>
+      <div class="edu-card">
+        <p class="edu-year">2022 — 2023</p>
+        <p class="edu-degree">Baccalauréat Général</p>
+        <p class="edu-school">Maths & Physique · Mention Bien</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section" id="contact">
+    <p class="section-label fade-up">Disponible</p>
+    <h2 class="section-title fade-up">Contact</h2>
+    <div class="contact-grid fade-up">
+      <a href="mailto:mathis.germanaz@epitech.eu" class="contact-item">
+        <div class="contact-icon">✉</div>
+        <div>
+          <p class="contact-label">Email</p>
+          <p class="contact-value">mathis.germanaz@epitech.eu</p>
+        </div>
+      </a>
+      <a href="tel:0693821030" class="contact-item">
+        <div class="contact-icon">☎</div>
+        <div>
+          <p class="contact-label">Téléphone</p>
+          <p class="contact-value">06 93 82 10 30</p>
+        </div>
+      </a>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <p class="contact-label">Localisation</p>
+          <p class="contact-value">Saint-André · La Réunion</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🚗</div>
+        <div>
+          <p class="contact-label">Mobilité</p>
+          <p class="contact-value">Permis B · Véhiculé</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer><p>Mathis Germanaz · Epitech La Réunion · Recherche stage Juil.–Déc. 2026</p></footer>
+</div>
+
+<!-- ══════════════════ RAT PROJECT PAGE ══════════════════ -->
+<div id="page-proj-rat" class="page">
+  <div class="proj-hero">
+    <span class="proj-back" onclick="showPage('home')">← Retour aux projets</span>
+    <div class="proj-type-badge" style="background:rgba(255,107,53,0.1);color:var(--accent3);border:1px solid rgba(255,107,53,0.25);">Sécurité offensive · Red Team</div>
+    <h1 class="proj-title" style="color:var(--accent3);">Remote<br>Access Tool</h1>
+    <p class="proj-subtitle">Application client-serveur de contrôle à distance sous Windows, développée en Delphi dans un cadre de recherche en sécurité offensive — analyse des mécanismes de détection pour mieux les comprendre.</p>
+    <div class="proj-meta-row">
+      <div class="proj-meta-item"><p class="meta-label">Langage</p><p class="meta-value highlight-orange">Delphi / Win32 API</p></div>
+      <div class="proj-meta-item"><p class="meta-label">Catégorie</p><p class="meta-value">Red Team / Sécurité offensive</p></div>
+      <div class="proj-meta-item"><p class="meta-label">OS cible</p><p class="meta-value">Windows</p></div>
+      <div class="proj-meta-item"><p class="meta-label">Contexte</p><p class="meta-value">Projet personnel · Recherche</p></div>
+    </div>
+  </div>
+  <div class="proj-body">
+    <div class="proj-section">
+      <h3 class="proj-section-title" style="color:var(--accent3);">Contexte & objectif</h3>
+      <p>Ce projet est né d'une curiosité pour les mécanismes d'attaque distants et leur détection par les solutions de sécurité modernes. L'objectif était de comprendre, du point de vue de l'attaquant, comment fonctionnent les outils de contrôle à distance — pour mieux anticiper leur présence lors d'une analyse forensique ou d'une réponse à incident.</p>
+      <p>Le développement en Delphi s'est imposé naturellement : le langage compile en binaire natif Win32, dispose d'un accès direct aux API Windows bas niveau, et génère des exécutables sans dépendances — des caractéristiques qui en font un choix classique dans la recherche en sécurité offensive.</p>
+      <div class="code-block orange">
+        <span class="highlight-orange">// Architecture client-serveur</span><br>
+        Agent (cible) &lt;——TCP/IP——&gt; Controller (attaquant)<br>
+        <br>
+        + Connexion persistante avec reconnexion automatique<br>
+        + Communication chiffrée (XOR / RC4)<br>
+        + Obfuscation du binaire pour tests de détection
+      </div>
+    </div>
+
+    <div class="proj-section">
+      <h3 class="proj-section-title" style="color:var(--accent3);">Fonctionnalités développées</h3>
+      <div class="feat-grid">
+        <div class="feat-card">
+          <p class="feat-icon">⌨</p>
+          <p class="feat-name" style="color:var(--accent3);">Keylogger</p>
+          <p class="feat-desc">Capture des frappes clavier via hooks Windows (SetWindowsHookEx). Stockage local avec exfiltration périodique vers le contrôleur.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-icon">🖥</p>
+          <p class="feat-name" style="color:var(--accent3);">Screen Monitor</p>
+          <p class="feat-desc">Capture d'écran à intervalles réguliers avec compression et transmission en temps réel via le canal de commande.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-icon">🍪</p>
+          <p class="feat-name" style="color:var(--accent3);">Vol de cookies</p>
+          <p class="feat-desc">Extraction des cookies navigateurs (Chrome, Firefox) depuis les profils utilisateur via accès au fichier SQLite local.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-icon">📁</p>
+          <p class="feat-name" style="color:var(--accent3);">File Manager</p>
+          <p class="feat-desc">Navigation dans l'arborescence, upload/download de fichiers, exécution de processus à distance.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-icon">💻</p>
+          <p class="feat-name" style="color:var(--accent3);">Remote Shell</p>
+          <p class="feat-desc">Shell interactif (cmd.exe) piped vers le contrôleur avec redirection stdin/stdout/stderr.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-icon">🔒</p>
+          <p class="feat-name" style="color:var(--accent3);">Persistance</p>
+          <p class="feat-desc">DLL Hijacking d'un service Windows afin d'assurer l'exécution automatique du programme lors du démarrage du système.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-icon">🔄</p>
+          <p class="feat-name" style="color:var(--accent3);">Update System</p>
+          <p class="feat-desc">Système de mise à jour à distance permettant le déploiement de nouvelles versions du client sans intervention manuelle.</p>
+      </div>
+      <div class="feat-card">
+        <p class="feat-icon">🎭</p>
+        <p class="feat-name" style="color:var(--accent3);">RunPE</p>
+        <p class="feat-desc">Étude des techniques d'exécution en mémoire afin d'analyser les mécanismes de détection et d'obfuscation utilisés par les solutions de sécurité modernes.</p>
+      </div>
+      </div>
+    </div>
+
+    <div class="proj-section">
+      <h3 class="proj-section-title" style="color:var(--accent3);">Tests de détection antivirus</h3>
+      <p>Une partie importante du projet consistait à tester la capacité de détection des solutions AV/EDR, afin de comprendre leurs mécanismes de signature et d'analyse comportementale. Les tests ont été réalisés en environnement isolé (VM sans réseau externe).</p>
+      <div class="code-block orange">
+        <span class="highlight-orange">// Résultats</span><br>
+              Windows Defender → non détecté<br>
+              Avast Free → non détecté<br>
+              Malwarebytes → non détecté<br>
+              Kaspersky → non détecté<br>
+              Palo Alto WildFire → non détecté<br>
+              <br>
+        <span class="highlight-orange">// Observation</span><br>
+             les solutions testées n'ont pas détecté l'échantillon dans l'environnement de laboratoire utilisé<br>
+      </div>
+      <p>Ce travail a permis de comprendre concrètement pourquoi les EDR modernes ne se basent plus uniquement sur les signatures statiques, mais analysent les comportements à l'exécution — une connaissance directement utile pour configurer et interpréter des alertes en environnement de production.</p>
+    </div>
+
+    <div class="proj-section">
+      <h3 class="proj-section-title" style="color:var(--accent3);">Ce que ce projet m'a appris</h3>
+      <p>Au-delà du code, ce projet a été un cours pratique sur la façon dont les équipes blue team doivent penser. Chaque fonctionnalité développée m'a forcé à me demander : quel artefact ça laisse ? Quelle API Windows utilise-t-on ? Comment un analyste détecterait-il ça dans les logs ?</p>
+      <p>Résultat : une compréhension bien plus fine des indicateurs de compromission (IOC), des mécanismes de persistance Windows, et de la pertinence des règles de détection dans les SIEM.</p>
+    </div>
+  </div>
+  <footer><p>Mathis Germanaz · <span class="proj-back" onclick="showPage('home')" style="display:inline;font-size:11px;">← Retour à l'accueil</span></p></footer>
+</div>
+
+<!-- ══════════════════ EPYTODO PROJECT PAGE ══════════════════ -->
+<div id="page-proj-epytodo" class="page">
+  <div class="proj-hero">
+    <span class="proj-back" onclick="showPage('home')">← Retour aux projets</span>
+    <div class="proj-type-badge" style="background:rgba(0,153,255,0.1);color:var(--accent2);border:1px solid rgba(0,153,255,0.25);">API REST · Backend</div>
+    <h1 class="proj-title" style="color:var(--accent2);">EpyTodo</h1>
+    <p class="proj-subtitle">API complète de gestion de tâches construite en TypeScript avec Node.js/Express, authentification JWT et base de données MySQL — projet Epitech.</p>
+    <div class="proj-meta-row">
+      <div class="proj-meta-item"><p class="meta-label">Stack</p><p class="meta-value highlight-blue">TypeScript · Node.js · Express</p></div>
+      <div class="proj-meta-item"><p class="meta-label">BDD</p><p class="meta-value">MySQL</p></div>
+      <div class="proj-meta-item"><p class="meta-label">Auth</p><p class="meta-value">JWT + bcryptjs</p></div>
+      <div class="proj-meta-item"><p class="meta-label">Projet</p><p class="meta-value">Epitech G-WEB-200</p></div>
+    </div>
+  </div>
+  <div class="proj-body">
+    <div class="proj-section">
+      <h3 class="proj-section-title" style="color:var(--accent2);">Présentation</h3>
+      <p>EpyTodo est un projet Epitech visant à construire une API REST de A à Z en TypeScript. L'objectif : gérer des utilisateurs et leurs tâches (todos) avec un système d'authentification complet — tout en respectant une architecture modulaire et des bonnes pratiques backend.</p>
+      <div class="code-block blue">
+        <span class="highlight-blue">// Structure du projet</span><br>
+        src/<br>
+        ├── config/db.ts        <span class="highlight-blue">// Connexion MySQL</span><br>
+        ├── index.ts            <span class="highlight-blue">// Entry point Express</span><br>
+        ├── middleware/<br>
+        │   ├── auth.ts         <span class="highlight-blue">// Vérification JWT</span><br>
+        │   └── notFound.ts     <span class="highlight-blue">// 404 handler</span><br>
+        └── routes/<br>
+            ├── auth/auth.ts<br>
+            ├── todos/todos.ts + todos.query.ts<br>
+            └── user/user.ts + user.query.ts
+      </div>
+    </div>
+
+    <div class="proj-section">
+      <h3 class="proj-section-title" style="color:var(--accent2);">Base de données MySQL</h3>
+      <p>Deux tables reliées par une clé étrangère : <span class="highlight-blue">user</span> et <span class="highlight-blue">todo</span>. Le schéma complet est exporté dans un fichier <code>epytodo.sql</code> versionnés dans le repo.</p>
+      <div class="code-block blue">
+        <span class="highlight-blue">-- Table user</span><br>
+        id INT AUTO_INCREMENT PRIMARY KEY,<br>
+        email VARCHAR(255) UNIQUE NOT NULL,<br>
+        password VARCHAR(255) NOT NULL,  <span class="highlight-blue">-- bcrypt hash</span><br>
+        name / firstname VARCHAR(255) NOT NULL,<br>
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP<br>
+        <br>
+        <span class="highlight-blue">-- Table todo</span><br>
+        id INT AUTO_INCREMENT PRIMARY KEY,<br>
+        title / description NOT NULL,<br>
+        due_time DATETIME NOT NULL,<br>
+        status ENUM('not started','todo','in progress','done'),<br>
+        user_id INT → FK vers user(id)
+      </div>
+    </div>
+
+    <div class="proj-section">
+      <h3 class="proj-section-title" style="color:var(--accent2);">Routes & authentification</h3>
+      <div class="feat-grid">
+        <div class="feat-card">
+          <p class="feat-name" style="color:var(--accent2);">POST /register · /login</p>
+          <p class="feat-desc">Inscription avec hash bcrypt, connexion avec vérification et retour d'un token JWT signé.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-name" style="color:var(--accent2);">GET·PUT·DELETE /users/:id</p>
+          <p class="feat-desc">CRUD utilisateur avec vérification du token JWT dans le header Authorization.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-name" style="color:var(--accent2);">CRUD /todos</p>
+          <p class="feat-desc">Création, lecture, mise à jour et suppression des tâches. Accès restreint via middleware auth.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-name" style="color:var(--accent2);">Error middleware</p>
+          <p class="feat-desc">Gestion centralisée des erreurs : 401 (no token), 400 (bad param), 404 (not found), 500 (server error).</p>
+        </div>
+      </div>
+      <div class="code-block blue" style="margin-top:1.5rem;">
+        <span class="highlight-blue">// Middleware JWT</span><br>
+        const token = req.headers['authorization'];<br>
+        if (!token) return res.status(401).json({ msg: 'No token, authorization denied' });<br>
+        jwt.verify(token, process.env.SECRET, (err, decoded) => {<br>
+        &nbsp;&nbsp;if (err) return res.status(401).json({ msg: 'Token is not valid' });<br>
+        &nbsp;&nbsp;req.user = decoded; next();<br>
+        });
+      </div>
+    </div>
+
+    <div class="proj-section">
+      <h3 class="proj-section-title" style="color:var(--accent2);">Ce que ce projet m'a appris</h3>
+      <p>EpyTodo a été ma première expérience complète de backend en TypeScript. La contrainte sur les packages autorisés (pas d'ORM, pas de librairie de validation) m'a forcé à comprendre réellement ce qui se passe entre une requête HTTP et la base de données.</p>
+      <p>La partie JWT + bcrypt m'a aussi donné une base solide sur les bonnes pratiques de sécurité applicative : ne jamais stocker de mots de passe en clair, valider les inputs, séparer les responsabilités entre routes et queries.</p>
+    </div>
+  </div>
+  <footer><p>Mathis Germanaz · <span class="proj-back" onclick="showPage('home')" style="display:inline;font-size:11px;">← Retour à l'accueil</span></p></footer>
+</div>
+
+<!-- ══════════════════ CTF PROJECT PAGE ══════════════════ -->
+<div id="page-proj-ctf" class="page">
+  <div class="proj-hero">
+    <span class="proj-back" onclick="showPage('home')">← Retour aux projets</span>
+    <div class="proj-type-badge" style="background:rgba(0,229,160,0.1);color:var(--accent);border:1px solid rgba(0,229,160,0.25);">Compétition · Sécurité</div>
+    <h1 class="proj-title" style="color:var(--accent);">CTF &<br>Root-Me</h1>
+    <p class="proj-subtitle">Challenges de sécurité offensive et défensive — cryptographie, forensics, exploitation réseau et web — sur Root-Me et lors de compétitions internes Epitech/Guardia.</p>
+    <div class="proj-meta-row">
+      <div class="proj-meta-item"><p class="meta-label">Plateforme</p><p class="meta-value highlight">Root-Me.org</p></div>
+      <div class="proj-meta-item"><p class="meta-label">Catégories</p><p class="meta-value">Crypto · Forensics · Web · Network</p></div>
+      <div class="proj-meta-item"><p class="meta-label">Format</p><p class="meta-value">Solo & équipe</p></div>
+    </div>
+  </div>
+  <div class="proj-body">
+    <div class="proj-section">
+      <h3 class="proj-section-title" style="color:var(--accent);">Root-Me</h3>
+      <p>Root-Me est la plateforme principale utilisée pour progresser en sécurité offensive. Les challenges couvrent un large spectre : du déchiffrement de messages encodés en Base64/XOR jusqu'à l'exploitation de vulnérabilités web comme les injections SQL et les failles XSS.</p>
+      <div class="feat-grid">
+        <div class="feat-card">
+          <p class="feat-icon">🔐</p>
+          <p class="feat-name" style="color:var(--accent);">Cryptographie</p>
+          <p class="feat-desc">Encodages classiques (César, Vigenère, XOR), hash cracking (MD5, SHA), RSA faible, analyse fréquentielle.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-icon">🔍</p>
+          <p class="feat-name" style="color:var(--accent);">Forensics</p>
+          <p class="feat-desc">Analyse de fichiers PCAP (Wireshark), extraction de données cachées (stéganographie), analyse de dumps mémoire.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-icon">🌐</p>
+          <p class="feat-name" style="color:var(--accent);">Web</p>
+          <p class="feat-desc">Injections SQL, XSS, CSRF, traversal de répertoires, contournement d'authentification côté client.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-icon">📡</p>
+          <p class="feat-name" style="color:var(--accent);">Réseau</p>
+          <p class="feat-desc">Analyse de trames réseau, reconstruction de flux TCP, décodage de protocoles, captures Wireshark.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-section">
+      <h3 class="proj-section-title" style="color:var(--accent);">CTF Epitech & Guardia</h3>
+      <p>Participation à des compétitions Capture The Flag organisées en interne à Epitech La Réunion et lors de la formation à Guardia Cybersecurity. Ces événements se déroulent en équipe avec un timing serré — ce qui développe autant les compétences techniques que la communication et la répartition des tâches.</p>
+      <div class="code-block">
+        <span class="highlight">// Méthodologie CTF</span><br>
+        1. Triage des challenges → estimation points/difficulté<br>
+        2. Répartition par spécialité (crypto / web / network / misc)<br>
+        3. Writeup systématique des solutions trouvées<br>
+        4. Revue d'équipe sur les challenges non résolus<br>
+        <br>
+        <span class="highlight">// Outils utilisés</span><br>
+        Wireshark, Ghidra, CyberChef, Binwalk,<br>
+        BurpSuite, nmap, john, hashcat
+      </div>
+    </div>
+
+    <div class="proj-section">
+      <h3 class="proj-section-title" style="color:var(--accent);">Apports</h3>
+      <p>Les CTF sont l'endroit où la théorie devient réelle. Un challenge de forensics sur une capture réseau force à comprendre TCP bien mieux qu'un cours magistral. Un challenge de crypto sur RSA enseigne pourquoi les paramètres doivent être correctement générés.</p>
+      <p>Root-Me en particulier permet une progression continue, mesurable, et dans des catégories directement pertinentes pour un futur rôle en sécurité offensive ou en SOC.</p>
+    </div>
+  </div>
+  <footer><p>Mathis Germanaz · <span class="proj-back" onclick="showPage('home')" style="display:inline;font-size:11px;">← Retour à l'accueil</span></p></footer>
+</div>
+
+<!-- ══════════════════ TARDIS PROJECT PAGE ══════════════════ -->
+<div id="page-proj-tardis" class="page">
+  <div class="proj-hero">
+    <span class="proj-back" onclick="showPage('home')">← Retour aux projets</span>
+    <div class="proj-type-badge" style="background:rgba(0,229,160,0.1);color:var(--accent);border:1px solid rgba(0,229,160,0.25);">Data Science · Python</div>
+    <h1 class="proj-title" style="color:var(--accent);">TARDIS<br>Bootstrap</h1>
+    <p class="proj-subtitle">Nettoyage, exploration et visualisation d'un dataset de retards ferroviaires avec pandas, matplotlib et seaborn — première étape vers un modèle prédictif.</p>
+    <div class="proj-meta-row">
+      <div class="proj-meta-item"><p class="meta-label">Langage</p><p class="meta-value highlight">Python</p></div>
+      <div class="proj-meta-item"><p class="meta-label">Libs</p><p class="meta-value">pandas · matplotlib · seaborn</p></div>
+      <div class="proj-meta-item"><p class="meta-label">Environnement</p><p class="meta-value">Jupyter Notebook</p></div>
+      <div class="proj-meta-item"><p class="meta-label">Projet</p><p class="meta-value">Epitech G-AIA-210</p></div>
+    </div>
+  </div>
+  <div class="proj-body">
+    <div class="proj-section">
+      <h3 class="proj-section-title" style="color:var(--accent);">Dataset & objectif</h3>
+      <p>Le dataset contient des enregistrements de trajets ferroviaires : gare de départ/arrivée, heure prévue, heure réelle, et délai en minutes (négatif = avance). L'objectif est de nettoyer ces données et d'en extraire des tendances visuelles exploitables pour un modèle prédictif.</p>
+      <div class="code-block">
+        <span class="highlight">// Colonnes du dataset</span><br>
+        date, departure_station, arrival_station,<br>
+        scheduled_time, actual_time, delay_minutes<br>
+        <br>
+        <span class="highlight">// Chargement et exploration initiale</span><br>
+        df = pd.read_csv('train_delays.csv')<br>
+        df.info()          # types + nulls<br>
+        df.describe()      # stats descriptives<br>
+        df.isnull().sum()  # valeurs manquantes
+      </div>
+    </div>
+
+    <div class="proj-section">
+      <h3 class="proj-section-title" style="color:var(--accent);">Pipeline de nettoyage</h3>
+      <div class="feat-grid">
+        <div class="feat-card">
+          <p class="feat-name" style="color:var(--accent);">Valeurs manquantes</p>
+          <p class="feat-desc">Analyse par colonne via <code>isnull()</code>. Suppression avec <code>dropna()</code> ou imputation selon le taux de nullité.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-name" style="color:var(--accent);">Doublons</p>
+          <p class="feat-desc">Détection via <code>duplicated()</code> et suppression avec <code>drop_duplicates()</code>.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-name" style="color:var(--accent);">Types & formats</p>
+          <p class="feat-desc">Conversion des colonnes date/heure avec <code>pd.to_datetime()</code> pour activer les opérations temporelles.</p>
+        </div>
+        <div class="feat-card">
+          <p class="feat-name" style="color:var(--accent);">Feature Engineering</p>
+          <p class="feat-desc">Extraction du jour de la semaine (<code>dt.dayofweek</code>), catégorisation des retards (à l'heure / léger / majeur).</p>
+        </div>
+      </div>
+      <div class="code-block" style="margin-top:1.5rem;">
+        <span class="highlight">// Catégorisation des retards</span><br>
+        def categorize_delay(minutes):<br>
+        &nbsp;&nbsp;if minutes &lt;= 0: return 'on time'<br>
+        &nbsp;&nbsp;elif minutes &lt;= 5: return 'slight delay'<br>
+        &nbsp;&nbsp;elif minutes &lt;= 20: return 'moderate delay'<br>
+        &nbsp;&nbsp;else: return 'major delay'<br>
+        <br>
+        df['delay_category'] = df['delay_minutes'].apply(categorize_delay)
+      </div>
+    </div>
+
+    <div class="proj-section">
+      <h3 class="proj-section-title" style="color:var(--accent);">Visualisations</h3>
+      <p>Après nettoyage, plusieurs visualisations ont été générées pour explorer les tendances : histogramme de distribution des retards, boxplot par gare, heatmap des corrélations, lineplot des retards moyens par jour de la semaine et countplot des catégories de retard.</p>
+      <div class="code-block">
+        <span class="highlight">// Exemples de visualisations</span><br>
+        sns.histplot(df['delay_minutes'], bins=30)    # distribution<br>
+        sns.boxplot(x='departure_station', y='delay_minutes', data=df)<br>
+        sns.heatmap(df.corr(), annot=True)            # corrélations<br>
+        sns.lineplot(x='day_of_week', y='delay_minutes', data=df)
+      </div>
+    </div>
+  </div>
+  <footer><p>Mathis Germanaz · <span class="proj-back" onclick="showPage('home')" style="display:inline;font-size:11px;">← Retour à l'accueil</span></p></footer>
+</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    window.scrollTo(0, 0);
+    initFadeUps();
+  }
+
+  function scrollTo_(selector) {
+    showPage('home');
+    setTimeout(() => {
+      const el = document.querySelector(selector);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 50);
+  }
+
+  function initFadeUps() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), 80 * i);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up:not(.visible)').forEach(el => observer.observe(el));
+  }
+
+  initFadeUps();
+</script>
+</body>
+</html>
