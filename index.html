@@ -2,1625 +2,699 @@
 <html lang="fr">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Mathis Germanaz | Développement & Cybersécurité</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-<style>
-
-:root{
---bg:#0f172a;
---bg2:#111827;aa
-
---card:rgba(255,255,255,.05);
-
---border:rgba(255,255,255,.08);
-
---text:#f8fafc;
---muted:#94a3b8;
-
---blue:#38bdf8;
---cyan:#14b8a6;
---orange:#f97316;
-}
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-html{
-scroll-behavior:smooth;
-}
-
-body{
-font-family:'Inter',sans-serif;
-background:
-radial-gradient(circle at 10% 20%, rgba(56,189,248,.15), transparent 35%),
-radial-gradient(circle at 90% 10%, rgba(20,184,166,.15), transparent 35%),
-radial-gradient(circle at 50% 80%, rgba(249,115,22,.08), transparent 40%),
-linear-gradient(180deg,#0f172a,#111827);
-
-color:var(--text);
-overflow-x:hidden;
-min-height:100vh;
-}
-
-a{
-text-decoration:none;
-color:inherit;
-}
-
-.container{
-width:min(1200px,92%);
-margin:auto;
-}
-
-.page{
-display:none;
-min-height:100vh;
-}
-
-.page.active{
-display:block;
-}
-
-header{
-position:fixed;
-top:0;
-left:0;
-right:0;
-
-z-index:1000;
-
-backdrop-filter:blur(20px);
-
-background:rgba(15,23,42,.65);
-
-border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.nav{
-height:80px;
-
-display:flex;
-align-items:center;
-justify-content:space-between;
-}
-
-.logo{
-font-family:'Syne',sans-serif;
-font-size:28px;
-font-weight:800;
-cursor:pointer;
-}
-
-.logo span{
-color:var(--blue);
-}
-
-nav{
-display:flex;
-gap:32px;
-}
-
-nav a{
-font-size:14px;
-color:var(--muted);
-transition:.25s;
-}
-
-nav a:hover{
-color:white;
-}
-
-.hero{
-min-height:100vh;
-
-display:flex;
-align-items:center;
-
-padding-top:80px;
-}
-
-.hero-grid{
-display:grid;
-grid-template-columns:1.2fr .8fr;
-gap:80px;
-align-items:center;
-}
-
-.badge{
-display:inline-flex;
-align-items:center;
-
-padding:8px 16px;
-
-border-radius:999px;
-
-background:rgba(56,189,248,.12);
-
-border:1px solid rgba(56,189,248,.25);
-
-font-size:13px;
-
-color:var(--blue);
-
-margin-bottom:30px;
-}
-
-.hero h1{
-font-family:'Syne',sans-serif;
-
-font-size:clamp(4rem,10vw,7rem);
-
-line-height:.95;
-
-margin-bottom:20px;
-}
-
-.hero h1 span{
-display:block;
-color:var(--blue);
-}
-
-.hero-subtitle{
-font-size:1.4rem;
-
-color:#cbd5e1;
-
-margin-bottom:24px;
-}
-
-.hero-text{
-max-width:650px;
-
-line-height:1.9;
-
-color:var(--muted);
-
-font-size:17px;
-}
-
-.hero-buttons{
-display:flex;
-gap:16px;
-
-margin-top:40px;
-
-flex-wrap:wrap;
-}
-
-.btn{
-padding:14px 28px;
-
-border-radius:14px;
-
-font-weight:600;
-
-transition:.3s;
-}
-
-.btn-primary{
-background:var(--blue);
-color:#06121f;
-}
-
-.btn-primary:hover{
-transform:translateY(-3px);
-box-shadow:0 15px 40px rgba(56,189,248,.25);
-}
-
-.btn-secondary{
-border:1px solid rgba(255,255,255,.1);
-
-background:rgba(255,255,255,.04);
-}
-
-.btn-secondary:hover{
-background:rgba(255,255,255,.08);
-}
-
-.hero-cards{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:20px;
-}
-
-.glass-card{
-background:rgba(255,255,255,.05);
-
-border:1px solid rgba(255,255,255,.08);
-
-backdrop-filter:blur(15px);
-
-border-radius:24px;
-
-padding:28px;
-}
-
-.stat{
-transition:.3s;
-}
-
-.stat:hover{
-transform:translateY(-6px);
-}
-
-.stat h3{
-font-size:2rem;
-font-family:'Syne',sans-serif;
-margin-bottom:8px;
-color:var(--blue);
-}
-
-.stat p{
-color:var(--muted);
-font-size:14px;
-}
-
-.section{
-padding:120px 0;
-}
-
-.section-title{
-font-family:'Syne',sans-serif;
-font-size:3rem;
-
-margin-bottom:60px;
-}
-
-.skills-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:25px;
-}
-
-.skills-grid h3{
-margin-bottom:20px;
-
-font-family:'Syne',sans-serif;
-
-font-size:1.5rem;
-}
-
-.skills-grid ul{
-list-style:none;
-display:flex;
-flex-direction:column;
-gap:12px;
-}
-
-.skills-grid li{
-color:#cbd5e1;
-}
-
-.projects-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:24px;
-}
-
-.project-card{
-
-cursor:pointer;
-
-background:rgba(255,255,255,.05);
-
-border:1px solid rgba(255,255,255,.08);
-
-border-radius:24px;
-
-padding:28px;
-
-transition:.35s;
-}
-
-.project-card:hover{
-transform:translateY(-8px);
-
-border-color:rgba(56,189,248,.3);
-
-box-shadow:0 25px 60px rgba(0,0,0,.25);
-}
-
-.project-card h3{
-font-family:'Syne',sans-serif;
-
-font-size:1.5rem;
-
-margin-bottom:16px;
-}
-
-.project-card p{
-line-height:1.8;
-color:var(--muted);
-
-margin-bottom:20px;
-}
-
-.tags{
-display:flex;
-flex-wrap:wrap;
-gap:8px;
-}
-
-.tags span{
-padding:6px 12px;
-
-font-size:12px;
-
-border-radius:999px;
-
-background:rgba(56,189,248,.12);
-
-color:var(--blue);
-}
-
-.timeline{
-display:flex;
-flex-direction:column;
-gap:30px;
-}
-
-.timeline-item{
-padding:30px;
-
-background:rgba(255,255,255,.05);
-
-border:1px solid rgba(255,255,255,.08);
-
-border-radius:24px;
-}
-
-.timeline-item h3{
-font-family:'Syne',sans-serif;
-font-size:1.5rem;
-}
-
-.timeline-item span{
-display:block;
-
-margin:8px 0 16px;
-
-color:var(--blue);
-}
-
-.timeline-item p{
-color:var(--muted);
-
-line-height:1.8;
-}
-
-.contact-box{
-max-width:800px;
-
-margin:auto;
-
-text-align:center;
-}
-
-.contact-box p{
-font-size:18px;
-
-color:var(--muted);
-
-margin-bottom:40px;
-}
-
-.contact-links{
-display:flex;
-
-justify-content:center;
-
-flex-wrap:wrap;
-
-gap:20px;
-}
-
-.contact-links a{
-padding:14px 24px;
-
-border-radius:14px;
-
-background:rgba(255,255,255,.05);
-
-border:1px solid rgba(255,255,255,.08);
-}
-
-.contact-links a:hover{
-border-color:rgba(56,189,248,.4);
-}
-@media(max-width:1100px){
-
-.hero-grid{
-grid-template-columns:1fr;
-}
-
-.projects-grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-.skills-grid{
-grid-template-columns:1fr;
-}
-}
-
-@media(max-width:768px){
-
-nav{
-display:none;
-}
-
-.hero h1{
-font-size:4rem;
-}
-
-.projects-grid{
-grid-template-columns:1fr;
-}
-
-.hero-cards{
-grid-template-columns:1fr;
-}
-
-.section{
-padding:80px 0;
-}
-
-.section-title{
-font-size:2.2rem;
-}
-}
-
-.fade-up{
-opacity:0;
-transform:translateY(30px);
-transition:.8s ease;
-}
-
-.fade-up.visible{
-opacity:1;
-transform:translateY(0);
-}
-
-.project-page{
-padding-top:140px;
-padding-bottom:100px;
-}
-
-.back-btn{
-display:inline-flex;
-align-items:center;
-gap:10px;
-
-margin-bottom:40px;
-
-padding:12px 20px;
-
-border-radius:14px;
-
-background:rgba(255,255,255,.05);
-
-border:1px solid rgba(255,255,255,.08);
-
-cursor:pointer;
-}
-
-.back-btn:hover{
-border-color:rgba(56,189,248,.4);
-}
-
-.project-header{
-margin-bottom:50px;
-}
-
-.project-header h1{
-font-family:'Syne',sans-serif;
-font-size:4rem;
-
-margin-bottom:20px;
-}
-
-.project-header p{
-max-width:800px;
-
-line-height:1.9;
-
-color:var(--muted);
-}
-
-.project-content{
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:40px;
-}
-
-.project-main{
-background:rgba(255,255,255,.05);
-
-border:1px solid rgba(255,255,255,.08);
-
-border-radius:24px;
-
-padding:35px;
-}
-
-.project-main h2{
-margin-bottom:20px;
-font-family:'Syne',sans-serif;
-}
-
-.project-main p{
-line-height:1.9;
-color:#cbd5e1;
-margin-bottom:20px;
-}
-
-.project-sidebar{
-display:flex;
-flex-direction:column;
-gap:20px;
-}
-
-.sidebar-card{
-background:rgba(255,255,255,.05);
-
-border:1px solid rgba(255,255,255,.08);
-
-border-radius:24px;
-
-padding:25px;
-}
-
-.sidebar-card h3{
-margin-bottom:16px;
-font-family:'Syne',sans-serif;
-}
-
-.sidebar-card ul{
-list-style:none;
-display:flex;
-flex-direction:column;
-gap:10px;
-}
-
-.sidebar-card li{
-color:#cbd5e1;
-}
-
-@media(max-width:900px){
-
-.project-content{
-grid-template-columns:1fr;
-}
-
-.project-header h1{
-font-size:3rem;
-}
-}
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mathis Germanaz | Développement & Cybersécurité</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<!-- ================================ -->
+<!-- HEADER                           -->
+<!-- ================================ -->
+
 <header>
+  <div class="container nav">
 
-<div class="container nav">
+    <div class="logo" onclick="showPage('home')">
+      MG<span>.</span>
+    </div>
 
-<div class="logo" onclick="showPage('home')">
-MG<span>.</span>
-</div>
+    <nav>
+      <a href="#about">À propos</a>
+      <a href="#projects">Projets</a>
+      <a href="#experience">Expérience</a>
+      <a href="#contact">Contact</a>
+    </nav>
 
-<nav>
+    <button id="langToggle" class="btn btn-secondary"
+      style="padding:10px 18px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.3); color:white;">
+      EN
+    </button>
 
-<a href="#about">À propos</a>
-
-<a href="#projects">
-Projets
-</a>
-
-<a href="#experience">
-Expérience
-</a>
-
-<a href="#contact">
-Contact
-</a>
-
-</nav>
-<button id="langToggle" class="btn btn-secondary" style="padding:10px 18px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.3); color:white;">EN</button>
-</div>
-
+  </div>
 </header>
 
-<!-- ===================== -->
-<!-- HOME PAGE -->
-<!-- ===================== -->
+
+<!-- ================================ -->
+<!-- PAGE : HOME                      -->
+<!-- ================================ -->
 
 <div id="home" class="page active">
 
-<section class="hero">
-
-<div class="container hero-grid">
-
-<div>
-
-<span class="badge">
-Disponible pour un stage • 2026
-</span>
-
-<h1>
-Mathis
-<span>Germanaz</span>
-</h1>
-
-<p class="hero-subtitle">
-Développement logiciel • Cybersécurité
-</p>
-
-<p class="hero-text">
-
-Étudiant à Epitech La Réunion.
-
-Je développe des applications,
-j'explore les systèmes informatiques
-et je m'intéresse particulièrement
-à la cybersécurité offensive et défensive.
-
-</p>
-
-<div class="hero-buttons">
-
-<a href="#projects" class="btn btn-primary">
-Voir mes projets
-</a>
-
-<a href="#contact" class="btn btn-secondary">
-Me contacter
-</a>
-
-</div>
-
-</div>
-
-<div class="hero-cards">
-
-<div class="glass-card stat">
-<h3>30+</h3>
-<p><span data-fr="Challenges Root-Me" data-en="Root-Me Challenges">Challenges Root-Me</span></p>
-</div>
-
-<div class="glass-card stat">
-<h3>2</h3>
-<p><span data-fr="Stages réalisés" data-en="Internships completed">Stages réalisés</span></p>
-</div>
-
-<div class="glass-card stat">
-<h3>C / Python</h3>
-<p><span data-fr="Développement logiciel" data-en="Software Development">Développement logiciel</span></p>
-</div>
-
-<div class="glass-card stat">
-<h3>2026</h3>
-<p><span data-fr="Recherche de stage" data-en="Seeking Internship">Recherche de stage</span></p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="about" class="section">
-
-<div class="container">
-
-<h2 class="section-title">
-Compétences
-</h2>
-
-<div class="skills-grid">
-
-<div class="glass-card">
-
-<h3><span data-fr='Cybersécurité' data-en='Cybersecurity'>Cybersécurité</span></h3>
-
-<ul>
-<li><span data-fr="Analyse de vulnérabilités" data-en="Vulnerability Analysis">Analyse de vulnérabilités</span></li>
-<li>CTF & Root-Me</li>
-<li>TCP/IP</li>
-<li><span data-fr="Sécurité applicative" data-en="Application Security">Sécurité applicative</span></li>
-<li><span data-fr="Analyse EDR" data-en="EDR Analysis">Analyse EDR</span></li>
-</ul>
-
-</div>
-
-<div class="glass-card">
-
-<h3><span data-fr='Développement' data-en='Development'>Développement</span></h3>
-
-<ul>
-<li>C</li>
-<li>Delphi</li>
-<li>Python</li>
-<li>TypeScript</li>
-<li>Node.js</li>
-<li>MySQL</li>
-</ul>
-
-</div>
-
-<div class="glass-card">
-
-<h3><span data-fr='Systèmes' data-en='Systems'>Systèmes</span></h3>
-
-<ul>
-<li>Linux</li>
-<li>Shell</li>
-<li>Docker</li>
-<li>Git</li>
-<li><span data-fr="Architecture logicielle" data-en="Software Architecture">Architecture logicielle</span></li>
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="projects" class="section">
-
-<div class="container">
-
-<h2 class="section-title">
-<span data-fr="Projets réalisés" data-en="Projects">Projets réalisés</span>
-</h2>
-
-<div class="projects-grid">
-
-<div class="project-card"
-onclick="showPage('robotfactory')">
-
-<h3>Robot Factory</h3>
-
-<p>
-<span data-fr="Développement d'un assembleur Corewar capable de convertir un langage assembleur en bytecode." data-en="Development of a Corewar assembler capable of converting assembly language into bytecode.">Développement d'un assembleur
-Corewar capable de convertir
-un langage assembleur en bytecode.</span>
-</p>
-
-<div class="tags">
-<span>C</span>
-<span>Parsing</span>
-<span>Compiler</span>
-<span>Corewar</span>
-</div>
-
-</div>
-
-<div class="project-card"
-onclick="showPage('minishell')">
-
-<h3>Minishell</h3>
-
-<p>
-<span data-fr="Reproduction d'un shell UNIX avec processus, pipes, redirections et environnement." data-en="Reproduction of a UNIX shell with processes, pipes, redirections and environment.">Reproduction d'un shell UNIX
-avec processus, pipes,
-redirections et environnement.</span>
-</p>
-
-<div class="tags">
-<span>C</span>
-<span>Linux</span>
-<span>Shell</span>
-<span>Unix</span>
-</div>
-
-</div>
-
-<div class="project-card"
-onclick="showPage('tardis')">
-
-<h3>TARDIS</h3>
-
-<p>
-<span data-fr="Projet Data Science et Machine Learning autour des retards SNCF." data-en="Data Science and Machine Learning project focused on SNCF train delays.">Projet Data Science
-et Machine Learning
-autour des retards SNCF.</span>
-</p>
-
-<div class="tags">
-<span>Python</span>
-<span>Pandas</span>
-<span>ML</span>
-<span>Streamlit</span>
-</div>
-
-</div>
-<div class="project-card"
-onclick="showPage('epytodo')">
-
-<h3>EpyTodo</h3>
-
-<p>
-<span data-fr="API REST complète avec authentification JWT, MySQL et TypeScript." data-en="Full REST API with JWT authentication, MySQL and TypeScript.">API REST complète
-avec authentification JWT,
-MySQL et TypeScript.</span>
-</p>
-
-<div class="tags">
-<span>TypeScript</span>
-<span>Node.js</span>
-<span>JWT</span>
-<span>MySQL</span>
-</div>
-
-</div>
-
-<div class="project-card"
-onclick="showPage('rootme')">
-
-<h3>Root-Me</h3>
-
-<p>
-<span data-fr="Plus de 30 challenges réalisés en sécurité web, réseau et forensics." data-en="Over 30 challenges completed in web security, networking and forensics.">Plus de 30 challenges
-réalisés en sécurité web,
-réseau et forensics.</span>
-</p>
-
-<div class="tags">
-<span>Web</span>
-<span>CTF</span>
-<span>Forensics</span>
-</div>
-
-</div>
-
-<div class="project-card"
-onclick="showPage('antivirus')">
-
-<h3><span data-fr="Analyse Antivirus" data-en="Antivirus Analysis">Analyse Antivirus</span></h3>
-
-<p>
-<span data-fr="Étude des mécanismes de détection et d'analyse des EDR modernes." data-en="Study of detection mechanisms and analysis of modern EDRs.">Étude des mécanismes
-de détection et d'analyse
-des EDR modernes.</span>
-</p>
-
-<div class="tags">
-<span>Windows</span>
-<span>EDR</span>
-<span>Palo Alto</span>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="experience" class="section">
-
-<div class="container">
-
-<h2 class="section-title">
-Expérience
-</h2>
-
-<div class="timeline">
-
-<div class="timeline-item">
-
-<h3>Pragma-TIC</h3>
-
-<span>2025</span>
-
-<p>
-<span data-fr="Développement du site web de l'entreprise, participation à des projets cybersécurité, mise en place d'environnements de test et analyse du comportement d'une solution EDR Palo Alto." data-en="Development of the company website, participation in cybersecurity projects, setup of test environments and behavioral analysis of a Palo Alto EDR solution.">Développement du site web de l'entreprise,
-participation à des projets cybersécurité,
-mise en place d'environnements de test
-et analyse du comportement d'une solution
-EDR Palo Alto.</span>
-</p>
-
-</div>
-
-<div class="timeline-item">
-
-<h3><span data-fr="Lycée Antoine de Saint-Exupéry" data-en="Antoine de Saint-Exupéry High School">Lycée Antoine de Saint-Exupéry</span></h3>
-
-<span>2023</span>
-
-<p>
-<span data-fr="Maintenance informatique, gestion du parc, support utilisateurs et administration système." data-en="IT maintenance, hardware fleet management, user support and system administration.">Maintenance informatique,
-gestion du parc,
-support utilisateurs
-et administration système.</span>
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="contact" class="section">
-
-<div class="container">
-
-<div class="contact-box">
-
-<h2 class="section-title">
-Contact
-</h2>
-
-<p>
-
-Disponible pour un stage
-de juillet à décembre 2026.
-
-</p>
-
-<div class="contact-links">
-
-<a href="mailto:mathis.germanaz@epitech.eu">
-✉ mathis.germanaz@epitech.eu
-</a>
-
-<a href="tel:+262693821030">
-📞 06 93 82 10 30
-</a>
-
-<a href="#">
-📍 La Réunion
-</a>
-
-<a href="#">
-Permis B
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-</div>
-
-<!-- ===================== -->
-<!-- ROBOT FACTORY -->
-<!-- ===================== -->
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+
+      <div>
+        <span class="badge">Disponible pour un stage • 2026</span>
+
+        <h1>
+          Mathis
+          <span>Germanaz</span>
+        </h1>
+
+        <p class="hero-subtitle">Développement logiciel • Cybersécurité</p>
+
+        <p class="hero-text">
+          Étudiant à Epitech La Réunion.
+          Je développe des applications,
+          j'explore les systèmes informatiques
+          et je m'intéresse particulièrement
+          à la cybersécurité offensive et défensive.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#projects" class="btn btn-primary">Voir mes projets</a>
+          <a href="#contact"  class="btn btn-secondary">Me contacter</a>
+        </div>
+      </div>
+
+      <!-- Cartes stats -->
+      <div class="hero-cards">
+        <div class="glass-card stat">
+          <h3>30+</h3>
+          <p><span data-fr="Challenges Root-Me" data-en="Root-Me Challenges">Challenges Root-Me</span></p>
+        </div>
+        <div class="glass-card stat">
+          <h3>2</h3>
+          <p><span data-fr="Stages réalisés" data-en="Internships completed">Stages réalisés</span></p>
+        </div>
+        <div class="glass-card stat">
+          <h3>C / Python</h3>
+          <p><span data-fr="Développement logiciel" data-en="Software Development">Développement logiciel</span></p>
+        </div>
+        <div class="glass-card stat">
+          <h3>2026</h3>
+          <p><span data-fr="Recherche de stage" data-en="Seeking Internship">Recherche de stage</span></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPÉTENCES -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="section-title">Compétences</h2>
+
+      <div class="skills-grid">
+
+        <div class="glass-card">
+          <h3><span data-fr="Cybersécurité" data-en="Cybersecurity">Cybersécurité</span></h3>
+          <ul>
+            <li><span data-fr="Analyse de vulnérabilités" data-en="Vulnerability Analysis">Analyse de vulnérabilités</span></li>
+            <li>CTF & Root-Me</li>
+            <li>TCP/IP</li>
+            <li><span data-fr="Sécurité applicative" data-en="Application Security">Sécurité applicative</span></li>
+            <li><span data-fr="Analyse EDR" data-en="EDR Analysis">Analyse EDR</span></li>
+          </ul>
+        </div>
+
+        <div class="glass-card">
+          <h3><span data-fr="Développement" data-en="Development">Développement</span></h3>
+          <ul>
+            <li>C</li>
+            <li>Delphi</li>
+            <li>Python</li>
+            <li>TypeScript</li>
+            <li>Node.js</li>
+            <li>MySQL</li>
+          </ul>
+        </div>
+
+        <div class="glass-card">
+          <h3><span data-fr="Systèmes" data-en="Systems">Systèmes</span></h3>
+          <ul>
+            <li>Linux</li>
+            <li>Shell</li>
+            <li>Docker</li>
+            <li>Git</li>
+            <li><span data-fr="Architecture logicielle" data-en="Software Architecture">Architecture logicielle</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJETS -->
+  <section id="projects" class="section">
+    <div class="container">
+      <h2 class="section-title">
+        <span data-fr="Projets réalisés" data-en="Projects">Projets réalisés</span>
+      </h2>
+
+      <div class="projects-grid">
+
+        <div class="project-card" onclick="showPage('robotfactory')">
+          <h3>Robot Factory</h3>
+          <p>
+            <span data-fr="Développement d'un assembleur Corewar capable de convertir un langage assembleur en bytecode."
+                  data-en="Development of a Corewar assembler capable of converting assembly language into bytecode.">
+              Développement d'un assembleur Corewar capable de convertir un langage assembleur en bytecode.
+            </span>
+          </p>
+          <div class="tags">
+            <span>C</span><span>Parsing</span><span>Compiler</span><span>Corewar</span>
+          </div>
+        </div>
+
+        <div class="project-card" onclick="showPage('minishell')">
+          <h3>Minishell</h3>
+          <p>
+            <span data-fr="Reproduction d'un shell UNIX avec processus, pipes, redirections et environnement."
+                  data-en="Reproduction of a UNIX shell with processes, pipes, redirections and environment.">
+              Reproduction d'un shell UNIX avec processus, pipes, redirections et environnement.
+            </span>
+          </p>
+          <div class="tags">
+            <span>C</span><span>Linux</span><span>Shell</span><span>Unix</span>
+          </div>
+        </div>
+
+        <div class="project-card" onclick="showPage('tardis')">
+          <h3>TARDIS</h3>
+          <p>
+            <span data-fr="Projet Data Science et Machine Learning autour des retards SNCF."
+                  data-en="Data Science and Machine Learning project focused on SNCF train delays.">
+              Projet Data Science et Machine Learning autour des retards SNCF.
+            </span>
+          </p>
+          <div class="tags">
+            <span>Python</span><span>Pandas</span><span>ML</span><span>Streamlit</span>
+          </div>
+        </div>
+
+        <div class="project-card" onclick="showPage('epytodo')">
+          <h3>EpyTodo</h3>
+          <p>
+            <span data-fr="API REST complète avec authentification JWT, MySQL et TypeScript."
+                  data-en="Full REST API with JWT authentication, MySQL and TypeScript.">
+              API REST complète avec authentification JWT, MySQL et TypeScript.
+            </span>
+          </p>
+          <div class="tags">
+            <span>TypeScript</span><span>Node.js</span><span>JWT</span><span>MySQL</span>
+          </div>
+        </div>
+
+        <div class="project-card" onclick="showPage('rootme')">
+          <h3>Root-Me</h3>
+          <p>
+            <span data-fr="Plus de 30 challenges réalisés en sécurité web, réseau et forensics."
+                  data-en="Over 30 challenges completed in web security, networking and forensics.">
+              Plus de 30 challenges réalisés en sécurité web, réseau et forensics.
+            </span>
+          </p>
+          <div class="tags">
+            <span>Web</span><span>CTF</span><span>Forensics</span>
+          </div>
+        </div>
+
+        <div class="project-card" onclick="showPage('antivirus')">
+          <h3><span data-fr="Analyse Antivirus" data-en="Antivirus Analysis">Analyse Antivirus</span></h3>
+          <p>
+            <span data-fr="Étude des mécanismes de détection et d'analyse des EDR modernes."
+                  data-en="Study of detection mechanisms and analysis of modern EDRs.">
+              Étude des mécanismes de détection et d'analyse des EDR modernes.
+            </span>
+          </p>
+          <div class="tags">
+            <span>Windows</span><span>EDR</span><span>Palo Alto</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPÉRIENCE -->
+  <section id="experience" class="section">
+    <div class="container">
+      <h2 class="section-title">Expérience</h2>
+
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <h3>Pragma-TIC</h3>
+          <span>2025</span>
+          <p>
+            <span data-fr="Développement du site web de l'entreprise, participation à des projets cybersécurité, mise en place d'environnements de test et analyse du comportement d'une solution EDR Palo Alto."
+                  data-en="Development of the company website, participation in cybersecurity projects, setup of test environments and behavioral analysis of a Palo Alto EDR solution.">
+              Développement du site web de l'entreprise, participation à des projets cybersécurité,
+              mise en place d'environnements de test et analyse du comportement d'une solution EDR Palo Alto.
+            </span>
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <h3>
+            <span data-fr="Lycée Antoine de Saint-Exupéry" data-en="Antoine de Saint-Exupéry High School">
+              Lycée Antoine de Saint-Exupéry
+            </span>
+          </h3>
+          <span>2023</span>
+          <p>
+            <span data-fr="Maintenance informatique, gestion du parc, support utilisateurs et administration système."
+                  data-en="IT maintenance, hardware fleet management, user support and system administration.">
+              Maintenance informatique, gestion du parc, support utilisateurs et administration système.
+            </span>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="contact-box">
+        <h2 class="section-title">Contact</h2>
+        <p>Disponible pour un stage de juillet à décembre 2026.</p>
+        <div class="contact-links">
+          <a href="mailto:mathis.germanaz@epitech.eu">✉ mathis.germanaz@epitech.eu</a>
+          <a href="tel:+262693821030">📞 06 93 82 10 30</a>
+          <a href="#">📍 La Réunion</a>
+          <a href="#">Permis B</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /home -->
+
+
+<!-- ================================ -->
+<!-- PAGE : ROBOT FACTORY             -->
+<!-- ================================ -->
 
 <div id="robotfactory" class="page">
+  <div class="container project-page">
 
-<div class="container project-page">
+    <div class="back-btn" onclick="showPage('home')">
+      <span data-fr="← Retour" data-en="← Back">← Retour</span>
+    </div>
 
-<div class="back-btn"
-onclick="showPage('home')">
+    <div class="project-header">
+      <h1>Robot Factory</h1>
+      <p>
+        <span data-fr="Développement d'un assembleur Corewar capable de convertir un langage assembleur en bytecode exécutable."
+              data-en="Development of a Corewar assembler capable of converting assembly language into executable bytecode.">
+          Développement d'un assembleur Corewar capable de convertir un langage assembleur en bytecode exécutable.
+        </span>
+      </p>
+    </div>
 
-<span data-fr="← Retour" data-en="← Back">← Retour</span>
+    <div class="project-content">
+      <div class="project-main">
+        <h2><span data-fr="Présentation" data-en="Overview">Présentation</span></h2>
+        <p>
+          <span data-fr="Robot Factory est un projet système réalisé en langage C. L'objectif était de développer un assembleur respectant les spécifications du jeu Corewar."
+                data-en="Robot Factory is a systems project written in C. The goal was to develop an assembler following the Corewar game specifications.">
+            Robot Factory est un projet système réalisé en langage C.
+            L'objectif était de développer un assembleur respectant les spécifications du jeu Corewar.
+          </span>
+        </p>
+        <p>
+          <span data-fr="Le programme analyse le code source, gère les labels, les instructions, les paramètres et génère ensuite un fichier binaire compatible avec la machine virtuelle Corewar."
+                data-en="The program parses source code, handles labels, instructions, parameters and then generates a binary file compatible with the Corewar virtual machine.">
+            Le programme analyse le code source, gère les labels, les instructions, les paramètres
+            et génère ensuite un fichier binaire compatible avec la machine virtuelle Corewar.
+          </span>
+        </p>
+        <p>
+          <span data-fr="Ce projet m'a permis de renforcer mes compétences en parsing, gestion mémoire, manipulation binaire et architecture logicielle."
+                data-en="This project allowed me to strengthen my skills in parsing, memory management, binary manipulation and software architecture.">
+            Ce projet m'a permis de renforcer mes compétences en parsing,
+            gestion mémoire, manipulation binaire et architecture logicielle.
+          </span>
+        </p>
+      </div>
 
-</div>
+      <div class="project-sidebar">
+        <div class="sidebar-card">
+          <h3><span data-fr="Technologies" data-en="Technologies">Technologies</span></h3>
+          <ul>
+            <li>C</li>
+            <li>Makefile</li>
+            <li>Parsing</li>
+            <li>Binary Encoding</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<div class="project-header">
+  </div>
+</div><!-- /robotfactory -->
 
-<h1>
-Robot Factory
-</h1>
 
-<p>
-<span data-fr="Développement d'un assembleur Corewar capable de convertir un langage assembleur en bytecode exécutable." data-en="Development of a Corewar assembler capable of converting assembly language into executable bytecode.">Développement d'un assembleur Corewar
-capable de convertir un langage assembleur
-en bytecode exécutable.</span>
-</p>
-
-</div>
-
-<div class="project-content">
-
-<div class="project-main">
-
-<h2>
-<span data-fr="Présentation" data-en="Overview">Présentation</span>
-</h2>
-
-<p>
-<span data-fr="Robot Factory est un projet système réalisé en langage C. L'objectif était de développer un assembleur respectant les spécifications du jeu Corewar." data-en="Robot Factory is a systems project written in C. The goal was to develop an assembler following the Corewar game specifications.">Robot Factory est un projet système réalisé
-en langage C.
-
-L'objectif était de développer un assembleur
-respectant les spécifications du jeu Corewar.</span>
-</p>
-
-<p>
-<span data-fr="Le programme analyse le code source, gère les labels, les instructions, les paramètres et génère ensuite un fichier binaire compatible avec la machine virtuelle Corewar." data-en="The program parses source code, handles labels, instructions, parameters and then generates a binary file compatible with the Corewar virtual machine.">Le programme analyse le code source,
-gère les labels, les instructions,
-les paramètres et génère ensuite
-un fichier binaire compatible
-avec la machine virtuelle Corewar.</span>
-</p>
-
-<p>
-<span data-fr="Ce projet m'a permis de renforcer mes compétences en parsing, gestion mémoire, manipulation binaire et architecture logicielle." data-en="This project allowed me to strengthen my skills in parsing, memory management, binary manipulation and software architecture.">Ce projet m'a permis de renforcer
-mes compétences en parsing,
-gestion mémoire, manipulation binaire
-et architecture logicielle.</span>
-</p>
-
-</div>
-
-<div class="project-sidebar">
-
-<div class="sidebar-card">
-
-<h3>
-<span data-fr="Technologies" data-en="Technologies">Technologies</span>
-</h3>
-
-<ul>
-<li>C</li>
-<li>Makefile</li>
-<li>Parsing</li>
-<li>Binary Encoding</li>
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- ===================== -->
-<!-- MINISHELL -->
-<!-- ===================== -->
+<!-- ================================ -->
+<!-- PAGE : MINISHELL                 -->
+<!-- ================================ -->
 
 <div id="minishell" class="page">
+  <div class="container project-page">
 
-<div class="container project-page">
+    <div class="back-btn" onclick="showPage('home')">
+      <span data-fr="← Retour" data-en="← Back">← Retour</span>
+    </div>
 
-<div class="back-btn"
-onclick="showPage('home')">
+    <div class="project-header">
+      <h1>Minishell</h1>
+      <p>
+        <span data-fr="Reproduction d'un shell UNIX fonctionnel en langage C."
+              data-en="Reproduction of a functional UNIX shell in C.">
+          Reproduction d'un shell UNIX fonctionnel en langage C.
+        </span>
+      </p>
+    </div>
 
-<span data-fr="← Retour" data-en="← Back">← Retour</span>
+    <div class="project-content">
+      <div class="project-main">
+        <h2><span data-fr="Présentation" data-en="Overview">Présentation</span></h2>
+        <p>
+          <span data-fr="Minishell reproduit le comportement d'un shell UNIX classique."
+                data-en="Minishell reproduces the behaviour of a classic UNIX shell.">
+            Minishell reproduit le comportement d'un shell UNIX classique.
+          </span>
+        </p>
+        <p>
+          <span data-fr="Le projet inclut la gestion des commandes internes, des variables d'environnement, des processus enfants, des pipes et des redirections."
+                data-en="The project includes built-in command handling, environment variables, child processes, pipes and redirections.">
+            Le projet inclut la gestion des commandes internes, des variables d'environnement,
+            des processus enfants, des pipes et des redirections.
+          </span>
+        </p>
+        <p>
+          <span data-fr="Ce projet m'a permis d'approfondir Linux, les appels système et la programmation système."
+                data-en="This project allowed me to deepen my knowledge of Linux, system calls and systems programming.">
+            Ce projet m'a permis d'approfondir Linux, les appels système et la programmation système.
+          </span>
+        </p>
+      </div>
 
-</div>
+      <div class="project-sidebar">
+        <div class="sidebar-card">
+          <h3><span data-fr="Technologies" data-en="Technologies">Technologies</span></h3>
+          <ul>
+            <li>C</li>
+            <li>Linux</li>
+            <li>Fork</li>
+            <li>Execve</li>
+            <li>Pipes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<div class="project-header">
+  </div>
+</div><!-- /minishell -->
 
-<h1>
-Minishell
-</h1>
 
-<p>
-<span data-fr="Reproduction d'un shell UNIX fonctionnel en langage C." data-en="Reproduction of a functional UNIX shell in C.">Reproduction d'un shell UNIX
-fonctionnel en langage C.</span>
-</p>
-
-</div>
-
-<div class="project-content">
-
-<div class="project-main">
-
-<h2>
-<span data-fr="Présentation" data-en="Overview">Présentation</span>
-</h2>
-
-<p>
-<span data-fr="Minishell reproduit le comportement d'un shell UNIX classique." data-en="Minishell reproduces the behaviour of a classic UNIX shell.">Minishell reproduit le comportement
-d'un shell UNIX classique.</span>
-</p>
-
-<p>
-<span data-fr="Le projet inclut la gestion des commandes internes, des variables d'environnement, des processus enfants, des pipes et des redirections." data-en="The project includes built-in command handling, environment variables, child processes, pipes and redirections.">Le projet inclut la gestion
-des commandes internes,
-des variables d'environnement,
-des processus enfants,
-des pipes et des redirections.</span>
-</p>
-
-<p>
-<span data-fr="Ce projet m'a permis d'approfondir Linux, les appels système et la programmation système." data-en="This project allowed me to deepen my knowledge of Linux, system calls and systems programming.">Ce projet m'a permis
-d'approfondir Linux,
-les appels système
-et la programmation système.</span>
-</p>
-
-</div>
-
-<div class="project-sidebar">
-
-<div class="sidebar-card">
-
-<h3>
-<span data-fr="Technologies" data-en="Technologies">Technologies</span>
-</h3>
-
-<ul>
-<li>C</li>
-<li>Linux</li>
-<li>Fork</li>
-<li>Execve</li>
-<li>Pipes</li>
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- ===================== -->
-<!-- TARDIS -->
-<!-- ===================== -->
+<!-- ================================ -->
+<!-- PAGE : TARDIS                    -->
+<!-- ================================ -->
 
 <div id="tardis" class="page">
+  <div class="container project-page">
 
-<div class="container project-page">
+    <div class="back-btn" onclick="showPage('home')">
+      <span data-fr="← Retour" data-en="← Back">← Retour</span>
+    </div>
 
-<div class="back-btn"
-onclick="showPage('home')">
+    <div class="project-header">
+      <h1>TARDIS</h1>
+      <p>
+        <span data-fr="Projet Data Science & Machine Learning autour de la prédiction des retards SNCF."
+              data-en="Data Science & Machine Learning project focused on predicting SNCF train delays.">
+          Projet Data Science & Machine Learning autour de la prédiction des retards SNCF.
+        </span>
+      </p>
+    </div>
 
-<span data-fr="← Retour" data-en="← Back">← Retour</span>
+    <div class="project-content">
+      <div class="project-main">
+        <h2><span data-fr="Présentation" data-en="Overview">Présentation</span></h2>
+        <p>
+          <span data-fr="TARDIS est un projet de Data Science centré sur l'analyse des retards des trains SNCF."
+                data-en="TARDIS is a Data Science project focused on analysing SNCF train delays.">
+            TARDIS est un projet de Data Science centré sur l'analyse des retards des trains SNCF.
+          </span>
+        </p>
+        <p><span data-fr="Le projet comprend :" data-en="The project includes:">Le projet comprend :</span></p>
+        <p>
+          <span data-fr="• Nettoyage des données<br>• Analyse exploratoire (EDA)<br>• Feature Engineering<br>• Modèles de régression<br>• Optimisation des performances<br>• Dashboard Streamlit"
+                data-en="• Data Cleaning<br>• Exploratory Data Analysis (EDA)<br>• Feature Engineering<br>• Regression Models<br>• Performance Optimisation<br>• Streamlit Dashboard">
+            • Nettoyage des données<br>
+            • Analyse exploratoire (EDA)<br>
+            • Feature Engineering<br>
+            • Modèles de régression<br>
+            • Optimisation des performances<br>
+            • Dashboard Streamlit
+          </span>
+        </p>
+        <p>
+          <span data-fr="L'objectif était de prédire les retards futurs à partir des données historiques."
+                data-en="The goal was to predict future delays from historical data.">
+            L'objectif était de prédire les retards futurs à partir des données historiques.
+          </span>
+        </p>
+      </div>
 
-</div>
+      <div class="project-sidebar">
+        <div class="sidebar-card">
+          <h3><span data-fr="Technologies" data-en="Technologies">Technologies</span></h3>
+          <ul>
+            <li>Python</li>
+            <li>Pandas</li>
+            <li>Scikit-Learn</li>
+            <li>NumPy</li>
+            <li>Streamlit</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<div class="project-header">
+  </div>
+</div><!-- /tardis -->
 
-<h1>
-TARDIS
-</h1>
 
-<p>
-<span data-fr="Projet Data Science & Machine Learning autour de la prédiction des retards SNCF." data-en="Data Science & Machine Learning project focused on predicting SNCF train delays.">Projet Data Science & Machine Learning
-autour de la prédiction des retards SNCF.</span>
-</p>
-
-</div>
-
-<div class="project-content">
-
-<div class="project-main">
-
-<h2>
-<span data-fr="Présentation" data-en="Overview">Présentation</span>
-</h2>
-
-<p>
-<span data-fr="TARDIS est un projet de Data Science centré sur l'analyse des retards des trains SNCF." data-en="TARDIS is a Data Science project focused on analysing SNCF train delays.">TARDIS est un projet de Data Science
-centré sur l'analyse des retards
-des trains SNCF.</span>
-</p>
-
-<p>
-<span data-fr="Le projet comprend :" data-en="The project includes:">Le projet comprend :</span>
-</p>
-
-<p>
-<span data-fr="• Nettoyage des données<br>• Analyse exploratoire (EDA)<br>• Feature Engineering<br>• Modèles de régression<br>• Optimisation des performances<br>• Dashboard Streamlit" data-en="• Data Cleaning<br>• Exploratory Data Analysis (EDA)<br>• Feature Engineering<br>• Regression Models<br>• Performance Optimisation<br>• Streamlit Dashboard">• Nettoyage des données<br>
-• Analyse exploratoire (EDA)<br>
-• Feature Engineering<br>
-• Modèles de régression<br>
-• Optimisation des performances<br>
-• Dashboard Streamlit</span>
-</p>
-
-<p>
-<span data-fr="L'objectif était de prédire les retards futurs à partir des données historiques." data-en="The goal was to predict future delays from historical data.">L'objectif était de prédire
-les retards futurs à partir
-des données historiques.</span>
-</p>
-
-</div>
-
-<div class="project-sidebar">
-
-<div class="sidebar-card">
-
-<h3>
-<span data-fr="Technologies" data-en="Technologies">Technologies</span>
-</h3>
-
-<ul>
-<li>Python</li>
-<li>Pandas</li>
-<li>Scikit-Learn</li>
-<li>NumPy</li>
-<li>Streamlit</li>
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-<!-- ===================== -->
-<!-- EPYTODO -->
-<!-- ===================== -->
+<!-- ================================ -->
+<!-- PAGE : EPYTODO                   -->
+<!-- ================================ -->
 
 <div id="epytodo" class="page">
+  <div class="container project-page">
 
-<div class="container project-page">
+    <div class="back-btn" onclick="showPage('home')">
+      <span data-fr="← Retour" data-en="← Back">← Retour</span>
+    </div>
 
-<div class="back-btn"
-onclick="showPage('home')">
-<span data-fr="← Retour" data-en="← Back">← Retour</span>
-</div>
+    <div class="project-header">
+      <h1>EpyTodo</h1>
+      <p>
+        <span data-fr="Développement d'une API REST complète avec authentification sécurisée et gestion de tâches."
+              data-en="Development of a full REST API with secure authentication and task management.">
+          Développement d'une API REST complète avec authentification sécurisée et gestion de tâches.
+        </span>
+      </p>
+    </div>
 
-<div class="project-header">
+    <div class="project-content">
+      <div class="project-main">
+        <h2><span data-fr="Présentation" data-en="Overview">Présentation</span></h2>
+        <p>
+          <span data-fr="EpyTodo est une API REST développée en TypeScript permettant la gestion d'utilisateurs et de tâches."
+                data-en="EpyTodo is a REST API built in TypeScript for managing users and tasks.">
+            EpyTodo est une API REST développée en TypeScript permettant la gestion d'utilisateurs et de tâches.
+          </span>
+        </p>
+        <p>
+          <span data-fr="Le projet intègre l'authentification JWT, la gestion des permissions, des routes protégées ainsi qu'une base de données MySQL."
+                data-en="The project includes JWT authentication, permission management, protected routes and a MySQL database.">
+            Le projet intègre l'authentification JWT, la gestion des permissions,
+            des routes protégées ainsi qu'une base de données MySQL.
+          </span>
+        </p>
+        <p>
+          <span data-fr="Il m'a permis d'améliorer mes compétences en architecture backend, sécurité API et conception logicielle."
+                data-en="It helped me improve my skills in backend architecture, API security and software design.">
+            Il m'a permis d'améliorer mes compétences en architecture backend, sécurité API et conception logicielle.
+          </span>
+        </p>
+      </div>
 
-<h1>EpyTodo</h1>
+      <div class="project-sidebar">
+        <div class="sidebar-card">
+          <h3><span data-fr="Technologies" data-en="Technologies">Technologies</span></h3>
+          <ul>
+            <li>TypeScript</li>
+            <li>Node.js</li>
+            <li>Express</li>
+            <li>JWT</li>
+            <li>MySQL</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<p>
-<span data-fr="Développement d'une API REST complète avec authentification sécurisée et gestion de tâches." data-en="Development of a full REST API with secure authentication and task management.">Développement d'une API REST complète
-avec authentification sécurisée et gestion
-de tâches.</span>
-</p>
+  </div>
+</div><!-- /epytodo -->
 
-</div>
 
-<div class="project-content">
-
-<div class="project-main">
-
-<h2><span data-fr='Présentation' data-en='Overview'>Présentation</span></h2>
-
-<p>
-<span data-fr="EpyTodo est une API REST développée en TypeScript permettant la gestion d'utilisateurs et de tâches." data-en="EpyTodo is a REST API built in TypeScript for managing users and tasks.">EpyTodo est une API REST développée
-en TypeScript permettant la gestion
-d'utilisateurs et de tâches.</span>
-</p>
-
-<p>
-<span data-fr="Le projet intègre l'authentification JWT, la gestion des permissions, des routes protégées ainsi qu'une base de données MySQL." data-en="The project includes JWT authentication, permission management, protected routes and a MySQL database.">Le projet intègre l'authentification JWT,
-la gestion des permissions, des routes
-protégées ainsi qu'une base de données MySQL.</span>
-</p>
-
-<p>
-<span data-fr="Il m'a permis d'améliorer mes compétences en architecture backend, sécurité API et conception logicielle." data-en="It helped me improve my skills in backend architecture, API security and software design.">Il m'a permis d'améliorer mes compétences
-en architecture backend, sécurité API
-et conception logicielle.</span>
-</p>
-
-</div>
-
-<div class="project-sidebar">
-
-<div class="sidebar-card">
-
-<h3><span data-fr='Technologies' data-en='Technologies'>Technologies</span></h3>
-
-<ul>
-<li>TypeScript</li>
-<li>Node.js</li>
-<li>Express</li>
-<li>JWT</li>
-<li>MySQL</li>
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- ===================== -->
-<!-- ROOT ME -->
-<!-- ===================== -->
+<!-- ================================ -->
+<!-- PAGE : ROOT-ME                   -->
+<!-- ================================ -->
 
 <div id="rootme" class="page">
+  <div class="container project-page">
 
-<div class="container project-page">
+    <div class="back-btn" onclick="showPage('home')">
+      <span data-fr="← Retour" data-en="← Back">← Retour</span>
+    </div>
 
-<div class="back-btn"
-onclick="showPage('home')">
-<span data-fr="← Retour" data-en="← Back">← Retour</span>
-</div>
+    <div class="project-header">
+      <h1>Root-Me</h1>
+      <p>
+        <span data-fr="Entraînement continu à la cybersécurité à travers des challenges techniques."
+              data-en="Continuous cybersecurity training through technical challenges.">
+          Entraînement continu à la cybersécurité à travers des challenges techniques.
+        </span>
+      </p>
+    </div>
 
-<div class="project-header">
+    <div class="project-content">
+      <div class="project-main">
+        <h2><span data-fr="Présentation" data-en="Overview">Présentation</span></h2>
+        <p>
+          <span data-fr="Root-Me est une plateforme d'entraînement à la cybersécurité reconnue dans le domaine."
+                data-en="Root-Me is a well-known cybersecurity training platform in the field.">
+            Root-Me est une plateforme d'entraînement à la cybersécurité reconnue dans le domaine.
+          </span>
+        </p>
+        <p>
+          <span data-fr="J'y ai réalisé plus de 30 challenges portant sur différents domaines :"
+                data-en="I completed over 30 challenges covering various domains:">
+            J'y ai réalisé plus de 30 challenges portant sur différents domaines :
+          </span>
+        </p>
+        <p>
+          <span data-fr="• Sécurité Web<br>• Réseau<br>• Cryptographie<br>• Forensics<br>• Programmation"
+                data-en="• Web Security<br>• Networking<br>• Cryptography<br>• Forensics<br>• Programming">
+            • Sécurité Web<br>• Réseau<br>• Cryptographie<br>• Forensics<br>• Programmation
+          </span>
+        </p>
+        <p>
+          <span data-fr="Ces exercices me permettent de développer une méthodologie d'analyse et de résolution de problèmes appliquée à la sécurité."
+                data-en="These exercises allow me to develop an analytical and problem-solving methodology applied to security.">
+            Ces exercices me permettent de développer une méthodologie d'analyse
+            et de résolution de problèmes appliquée à la sécurité.
+          </span>
+        </p>
+      </div>
 
-<h1>Root-Me</h1>
+      <div class="project-sidebar">
+        <div class="sidebar-card">
+          <h3><span data-fr="Domaines" data-en="Domains">Domaines</span></h3>
+          <ul>
+            <li>Web</li>
+            <li>Forensics</li>
+            <li>Crypto</li>
+            <li><span data-fr="Réseau" data-en="Networking">Réseau</span></li>
+            <li>CTF</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<p>
-<span data-fr="Entraînement continu à la cybersécurité à travers des challenges techniques." data-en="Continuous cybersecurity training through technical challenges.">Entraînement continu à la cybersécurité
-à travers des challenges techniques.</span>
-</p>
+  </div>
+</div><!-- /rootme -->
 
-</div>
 
-<div class="project-content">
-
-<div class="project-main">
-
-<h2><span data-fr='Présentation' data-en='Overview'>Présentation</span></h2>
-
-<p>
-<span data-fr="Root-Me est une plateforme d'entraînement à la cybersécurité reconnue dans le domaine." data-en="Root-Me is a well-known cybersecurity training platform in the field.">Root-Me est une plateforme d'entraînement
-à la cybersécurité reconnue dans le domaine.</span>
-</p>
-
-<p>
-<span data-fr="J'y ai réalisé plus de 30 challenges portant sur différents domaines :" data-en="I completed over 30 challenges covering various domains:">J'y ai réalisé plus de 30 challenges
-portant sur différents domaines :</span>
-</p>
-
-<p>
-<span data-fr="• Sécurité Web<br>• Réseau<br>• Cryptographie<br>• Forensics<br>• Programmation" data-en="• Web Security<br>• Networking<br>• Cryptography<br>• Forensics<br>• Programming">• Sécurité Web<br>
-• Réseau<br>
-• Cryptographie<br>
-• Forensics<br>
-• Programmation</span>
-</p>
-
-<p>
-<span data-fr="Ces exercices me permettent de développer une méthodologie d'analyse et de résolution de problèmes appliquée à la sécurité." data-en="These exercises allow me to develop an analytical and problem-solving methodology applied to security.">Ces exercices me permettent de développer
-une méthodologie d'analyse et de résolution
-de problèmes appliquée à la sécurité.</span>
-</p>
-
-</div>
-
-<div class="project-sidebar">
-
-<div class="sidebar-card">
-
-<h3><span data-fr='Domaines' data-en='Domains'>Domaines</span></h3>
-
-<ul>
-<li>Web</li>
-<li>Forensics</li>
-<li>Crypto</li>
-<li><span data-fr="Réseau" data-en="Networking">Réseau</span></li>
-<li>CTF</li>
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- ===================== -->
-<!-- ANALYSE ANTIVIRUS -->
-<!-- ===================== -->
+<!-- ================================ -->
+<!-- PAGE : ANALYSE ANTIVIRUS         -->
+<!-- ================================ -->
 
 <div id="antivirus" class="page">
+  <div class="container project-page">
 
-<div class="container project-page">
+    <div class="back-btn" onclick="showPage('home')">
+      <span data-fr="← Retour" data-en="← Back">← Retour</span>
+    </div>
 
-<div class="back-btn"
-onclick="showPage('home')">
-<span data-fr="← Retour" data-en="← Back">← Retour</span>
-</div>
+    <div class="project-header">
+      <h1><span data-fr="Analyse Antivirus & EDR" data-en="Antivirus & EDR Analysis">Analyse Antivirus & EDR</span></h1>
+      <p>
+        <span data-fr="Étude du fonctionnement des solutions de protection modernes dans un contexte de cybersécurité défensive."
+              data-en="Study of how modern protection solutions work in a defensive cybersecurity context.">
+          Étude du fonctionnement des solutions de protection modernes dans un contexte de cybersécurité défensive.
+        </span>
+      </p>
+    </div>
 
-<div class="project-header">
+    <div class="project-content">
+      <div class="project-main">
+        <h2><span data-fr="Présentation" data-en="Overview">Présentation</span></h2>
+        <p>
+          <span data-fr="Ce projet avait pour objectif de mieux comprendre les mécanismes de détection utilisés par les antivirus et les EDR modernes."
+                data-en="This project aimed to better understand the detection mechanisms used by modern antivirus software and EDRs.">
+            Ce projet avait pour objectif de mieux comprendre les mécanismes de détection
+            utilisés par les antivirus et les EDR modernes.
+          </span>
+        </p>
+        <p>
+          <span data-fr="L'accent a été mis sur l'observation des comportements surveillés par les solutions de sécurité ainsi que sur les méthodes de détection utilisées."
+                data-en="The focus was on observing the behaviours monitored by security solutions and the detection methods they use.">
+            L'accent a été mis sur l'observation des comportements surveillés par les solutions de sécurité
+            ainsi que sur les méthodes de détection utilisées.
+          </span>
+        </p>
+        <p>
+          <span data-fr="Cette expérience a été particulièrement enrichissante lors de mon stage chez Pragma-TIC où j'ai participé à la mise en place d'un environnement de test autour d'une solution Palo Alto."
+                data-en="This experience was particularly valuable during my internship at Pragma-TIC, where I participated in setting up a test environment around a Palo Alto solution.">
+            Cette expérience a été particulièrement enrichissante lors de mon stage chez Pragma-TIC
+            où j'ai participé à la mise en place d'un environnement de test autour d'une solution Palo Alto.
+          </span>
+        </p>
+        <p>
+          <span data-fr="Ce travail m'a permis de développer une meilleure compréhension des mécanismes de défense des postes de travail et des outils utilisés par les équipes cybersécurité."
+                data-en="This work helped me develop a better understanding of workstation defence mechanisms and the tools used by cybersecurity teams.">
+            Ce travail m'a permis de développer une meilleure compréhension des mécanismes de défense
+            des postes de travail et des outils utilisés par les équipes cybersécurité.
+          </span>
+        </p>
+      </div>
 
-<h1><span data-fr="Analyse Antivirus & EDR" data-en="Antivirus & EDR Analysis">Analyse Antivirus & EDR</span></h1>
+      <div class="project-sidebar">
+        <div class="sidebar-card">
+          <h3><span data-fr="Compétences" data-en="Skills">Compétences</span></h3>
+          <ul>
+            <li>Windows</li>
+            <li>EDR</li>
+            <li>Palo Alto</li>
+            <li><span data-fr="Analyse comportementale" data-en="Behavioural Analysis">Analyse comportementale</span></li>
+            <li><span data-fr="Cybersécurité" data-en="Cybersecurity">Cybersécurité</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<p>
-<span data-fr="Étude du fonctionnement des solutions de protection modernes dans un contexte de cybersécurité défensive." data-en="Study of how modern protection solutions work in a defensive cybersecurity context.">Étude du fonctionnement des solutions
-de protection modernes dans un contexte
-de cybersécurité défensive.</span>
-</p>
-
-</div>
-
-<div class="project-content">
-
-<div class="project-main">
-
-<h2><span data-fr='Présentation' data-en='Overview'>Présentation</span></h2>
-
-<p>
-<span data-fr="Ce projet avait pour objectif de mieux comprendre les mécanismes de détection utilisés par les antivirus et les EDR modernes." data-en="This project aimed to better understand the detection mechanisms used by modern antivirus software and EDRs.">Ce projet avait pour objectif
-de mieux comprendre les mécanismes
-de détection utilisés par les antivirus
-et les EDR modernes.</span>
-</p>
-
-<p>
-<span data-fr="L'accent a été mis sur l'observation des comportements surveillés par les solutions de sécurité ainsi que sur les méthodes de détection utilisées." data-en="The focus was on observing the behaviours monitored by security solutions and the detection methods they use.">L'accent a été mis sur l'observation
-des comportements surveillés par les
-solutions de sécurité ainsi que sur
-les méthodes de détection utilisées.</span>
-</p>
-
-<p>
-<span data-fr="Cette expérience a été particulièrement enrichissante lors de mon stage chez Pragma-TIC où j'ai participé à la mise en place d'un environnement de test autour d'une solution Palo Alto." data-en="This experience was particularly valuable during my internship at Pragma-TIC, where I participated in setting up a test environment around a Palo Alto solution.">Cette expérience a été particulièrement
-enrichissante lors de mon stage chez
-Pragma-TIC où j'ai participé à la mise
-en place d'un environnement de test
-autour d'une solution Palo Alto.</span>
-</p>
-
-<p>
-<span data-fr="Ce travail m'a permis de développer une meilleure compréhension des mécanismes de défense des postes de travail et des outils utilisés par les équipes cybersécurité." data-en="This work helped me develop a better understanding of workstation defence mechanisms and the tools used by cybersecurity teams.">Ce travail m'a permis de développer
-une meilleure compréhension des
-mécanismes de défense des postes
-de travail et des outils utilisés
-par les équipes cybersécurité.</span>
-</p>
-
-</div>
-
-<div class="project-sidebar">
-
-<div class="sidebar-card">
-
-<h3><span data-fr='Compétences' data-en='Skills'>Compétences</span></h3>
-
-<ul>
-<li>Windows</li>
-<li>EDR</li>
-<li>Palo Alto</li>
-<li><span data-fr="Analyse comportementale" data-en="Behavioural Analysis">Analyse comportementale</span></li>
-<li><span data-fr='Cybersécurité' data-en='Cybersecurity'>Cybersécurité</span></li>
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<script>
-
-function showPage(pageId){
-
-document
-.querySelectorAll('.page')
-.forEach(page=>{
-page.classList.remove('active');
-});
-
-document
-.getElementById(pageId)
-.classList.add('active');
-
-window.scrollTo({
-top:0,
-behavior:'smooth'
-});
-}
-
-const observer = new IntersectionObserver(entries=>{
-
-entries.forEach(entry=>{
-
-if(entry.isIntersecting){
-entry.target.classList.add('visible');
-}
-
-});
-
-},{
-threshold:0.15
-});
-
-window.addEventListener('load',()=>{
-
-document
-.querySelectorAll(
-'.glass-card,.project-card,.timeline-item,.sidebar-card'
-)
-.forEach(el=>{
-
-el.classList.add('fade-up');
-observer.observe(el);
-
-});
-
-});
+  </div>
+</div><!-- /antivirus -->
 
 
-const i18n={
-fr:{
-navAbout:"À propos",navProjects:"Projets",navExp:"Expérience",navContact:"Contact",
-badge:"Disponible pour un stage • 2026",
-subtitle:"Développement logiciel • Cybersécurité",
-hero:"Étudiant à Epitech La Réunion. Je développe des applications, j'explore les systèmes informatiques et je m'intéresse particulièrement à la cybersécurité offensive et défensive.",
-projectsBtn:"Voir mes projets",
-contactBtn:"Me contacter",
-skills:"Compétences",
-experience:"Expérience",
-contact:"Contact",
-availability:"Disponible pour un stage de juillet à décembre 2026.",
-pageTitle:"Mathis Germanaz | Développement & Cybersécurité"
-},
-en:{
-navAbout:"About",navProjects:"Projects",navExp:"Experience",navContact:"Contact",
-badge:"Available for Internship • 2026",
-subtitle:"Software Development • Cybersecurity",
-hero:"Student at Epitech Reunion. I develop applications, explore computer systems and have a strong interest in offensive and defensive cybersecurity.",
-projectsBtn:"View Projects",
-contactBtn:"Contact Me",
-skills:"Skills",
-experience:"Experience",
-contact:"Contact",
-availability:"Available for an internship from July to December 2026.",
-pageTitle:"Mathis Germanaz | Development & Cybersecurity"
-}
-};
-
-function translateStatic(lang){
- const nav=document.querySelectorAll('nav a');
- if(nav.length>=4){
-   nav[0].textContent=i18n[lang].navAbout;
-   nav[1].textContent=i18n[lang].navProjects;
-   nav[2].textContent=i18n[lang].navExp;
-   nav[3].textContent=i18n[lang].navContact;
- }
- document.querySelector('.badge').textContent=i18n[lang].badge;
- document.querySelector('.hero-subtitle').textContent=i18n[lang].subtitle;
- document.querySelector('.hero-text').textContent=i18n[lang].hero;
- document.querySelector('.hero-buttons .btn-primary').textContent=i18n[lang].projectsBtn;
- document.querySelector('.hero-buttons .btn-secondary').textContent=i18n[lang].contactBtn;
-
- document.querySelector('#about .section-title').textContent=i18n[lang].skills;
- document.querySelector('#experience .section-title').textContent=i18n[lang].experience;
- document.querySelector('#contact .section-title').textContent=i18n[lang].contact;
- document.querySelector('#contact p').textContent=i18n[lang].availability;
- document.title=i18n[lang].pageTitle;
-
- // Whole-page translation via data attributes
- document.querySelectorAll('[data-fr]').forEach(el=>{
-   el.innerHTML = lang==='fr' ? el.dataset.fr : el.dataset.en;
- });
-}
-
-document.addEventListener('DOMContentLoaded',()=>{
- let lang='fr';
- const btn=document.getElementById('langToggle');
- btn.addEventListener('click',()=>{
-   lang = lang==='fr' ? 'en' : 'fr';
-   btn.textContent = lang==='fr' ? 'EN' : 'FR';
-   translateStatic(lang);
- });
-});
-
-</script>
+<!-- Script -->
+<script src="script.js"></script>
 
 </body>
 </html>
