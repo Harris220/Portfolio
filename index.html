@@ -13,10 +13,14 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="style.css">
+  <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devicon@2.16.0/devicon.min.css">-->
+  <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+          
 </head>
 
 <body>
-
+<div class="spotlight"></div>
+<div class="dot-background"></div>
 <!-- ================================ -->
 <!-- HEADER                           -->
 <!-- ================================ -->
@@ -80,14 +84,16 @@
       <div class="hero-photo">
         <img src="images/mathis.png" alt="Mathis Germanaz">
       </div>
-      <!-- Cartes stats -->
+    </div>
+  </section>
+  <section class="stats-section increase">
       <div class="hero-cards">
         <div class="glass-card stat">
-          <h3>30+</h3>
+          <h3 class="nb" data-target="30">30</h3>
           <p><span data-fr="Challenges Root-Me" data-en="Root-Me Challenges">Challenges Root-Me</span></p>
         </div>
         <div class="glass-card stat">
-          <h3>2</h3>
+          <h3 class="nb" data-target="2">2</h3>
           <p><span data-fr="Stages réalisés" data-en="Internships completed">Stages réalisés</span></p>
         </div>
         <div class="glass-card stat">
@@ -99,9 +105,6 @@
           <p><span data-fr="Recherche de stage" data-en="Seeking Internship">Recherche de stage</span></p>
         </div>
       </div>
-      
-
-    </div>
   </section>
 
   <!-- COMPÉTENCES -->
@@ -114,34 +117,33 @@
         <div class="glass-card">
           <h3><span data-fr="Cybersécurité" data-en="Cybersecurity">Cybersécurité</span></h3>
           <ul>
-            <li><span data-fr="Analyse de vulnérabilités" data-en="Vulnerability Analysis">Analyse de vulnérabilités</span></li>
-            <li>CTF & Root-Me</li>
-            <li>TCP/IP</li>
-            <li><span data-fr="Sécurité applicative" data-en="Application Security">Sécurité applicative</span></li>
-            <li><span data-fr="Analyse EDR" data-en="EDR Analysis">Analyse EDR</span></li>
+            <li><i class="devicon-inertiajs-plain"></i><span data-fr="Analyse de vulnérabilités" data-en="Vulnerability Analysis"> Analyse de vulnérabilités</span></li>
+            <li><i class="devicon-inertiajs-plain"></i> CTF & Root-Me</li>
+            <li><i class="devicon-inertiajs-plain"></i> TCP/IP</li>
+            <li><i class="devicon-inertiajs-plain"></i><span data-fr="Sécurité applicative" data-en="Application Security"> Sécurité applicative</span></li>
+            <li><i class="devicon-inertiajs-plain"></i><span data-fr="Analyse EDR" data-en="EDR Analysis"> Analyse EDR</span></li>
           </ul>
         </div>
 
         <div class="glass-card">
           <h3><span data-fr="Développement" data-en="Development">Développement</span></h3>
           <ul>
-            <li>C</li>
-            <li>Delphi</li>
-            <li>Python</li>
-            <li>TypeScript</li>
-            <li>Node.js</li>
-            <li>MySQL</li>
+            <li><i class="devicon-c-plain colored"></i> C</li>
+            <li><i class="devicon-delphi-plain colored"></i> Delphi</li>
+            <li><i class="devicon-python-plain colored"></i> Python</li>
+            <li><i class="devicon-typescript-plain colored"></i> TypeScript</li>
+            <li><i class="devicon-nodejs-plain colored"></i> Node.js</li>
+            <li><i class="devicon-mysql-original colored"></i> MySQL</li>
           </ul>
         </div>
 
         <div class="glass-card">
           <h3><span data-fr="Systèmes" data-en="Systems">Systèmes</span></h3>
           <ul>
-            <li>Linux</li>
-            <li>Shell</li>
-            <li>Docker</li>
-            <li>Git</li>
-            <li><span data-fr="Architecture logicielle" data-en="Software Architecture">Architecture logicielle</span></li>
+            <li><i class="devicon-linux-plain colored"></i> Linux</li>
+            <li><i class="devicon-docker-plain colored"></i> Docker</li>
+            <li><i class="devicon-git-plain colored"></i> Git</li>
+            <li><i class="devicon-bash-plain colored"></i> Shell</li>
           </ul>
         </div>
 
@@ -160,6 +162,7 @@
 
         <div class="project-card" onclick="showPage('robotfactory')">
           <h3>Robot Factory</h3>
+          <img src="images/robotfactory.png" class="project-thumb">
           <p>
             <span data-fr="Développement d'un assembleur Corewar capable de convertir un langage assembleur en bytecode."
                   data-en="Development of a Corewar assembler capable of converting assembly language into bytecode.">
@@ -173,6 +176,7 @@
 
         <div class="project-card" onclick="showPage('minishell')">
           <h3>Minishell</h3>
+          <img src="images/minishell.png" class="project-thumb">
           <p>
             <span data-fr="Reproduction d'un shell UNIX avec processus, pipes, redirections et environnement."
                   data-en="Reproduction of a UNIX shell with processes, pipes, redirections and environment.">
@@ -186,6 +190,7 @@
 
         <div class="project-card" onclick="showPage('tardis')">
           <h3>TARDIS</h3>
+          <img src="images/tardis-dashboard.png" class="project-thumb">
           <p>
             <span data-fr="Projet Data Science et Machine Learning autour des retards SNCF."
                   data-en="Data Science and Machine Learning project focused on SNCF train delays.">
@@ -199,6 +204,7 @@
 
         <div class="project-card" onclick="showPage('epytodo')">
           <h3>EpyTodo</h3>
+          <img src="images/epytodo-postman.png" class="project-thumb">
           <p>
             <span data-fr="API REST complète avec authentification JWT, MySQL et TypeScript."
                   data-en="Full REST API with JWT authentication, MySQL and TypeScript.">
@@ -212,6 +218,7 @@
 
         <div class="project-card" onclick="showPage('rootme')">
           <h3>Root-Me</h3>
+          <img src="images/rootme-profile.png" class="project-thumb">
           <p>
             <span data-fr="Plus de 30 challenges réalisés en sécurité web, réseau et forensics."
                   data-en="Over 30 challenges completed in web security, networking and forensics.">
@@ -225,6 +232,7 @@
 
         <div class="project-card" onclick="showPage('antivirus')">
           <h3><span data-fr="Analyse Antivirus" data-en="Antivirus Analysis">Analyse Antivirus</span></h3>
+          <img src="images/paloalto.jpeg" class="project-thumb">
           <p>
             <span data-fr="Étude des mécanismes de détection et d'analyse des EDR modernes."
                   data-en="Study of detection mechanisms and analysis of modern EDRs.">

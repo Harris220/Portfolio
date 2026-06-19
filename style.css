@@ -213,7 +213,6 @@ nav a:hover {
 .hero-cards {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
 }
 
 .glass-card {
@@ -594,4 +593,93 @@ nav a:hover {
   margin-bottom: 25px;
   border: 1px solid rgba(255,255,255,.08);
   box-shadow: 0 20px 40px rgba(0,0,0,.25);
+}
+
+.spotlight{
+    position:fixed;
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background:radial-gradient(circle,
+    rgba(56,189,248,.18),
+    transparent 70%);
+    pointer-events:none;
+    z-index:-1;
+
+    transform:translate(-50%,-50%);
+}
+
+.project-thumb{
+
+width:100%;
+height:180px;
+
+object-fit:cover;
+
+border-radius:18px;
+
+margin-bottom:20px;
+
+}
+
+.project-card{
+
+    background:#172033;
+
+    border:1px solid rgba(255,255,255,.04);
+
+    transition:.35s;
+
+}
+
+.project-card:hover{
+
+    transform:translateY(-10px);
+
+    background:#1c2740;
+
+    border-color:rgba(56,189,248,.18);
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.45),
+        0 0 20px rgba(56,189,248,.10);
+
+}
+
+.hero-cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(4, 1fr);
+
+    gap:24px;
+
+    max-width:1100px;
+
+    margin:70px auto;
+
+}
+
+.stat{
+
+    text-align:center;
+
+    padding:32px 24px;
+
+    min-height:170px;
+
+    border-radius:22px;
+
+}
+
+.dot-background{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:-3;
+
+    pointer-events:none;
+
 }

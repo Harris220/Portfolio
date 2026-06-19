@@ -123,3 +123,33 @@ document.addEventListener('DOMContentLoaded', () => {
     translateStatic(lang);
   });
 });
+
+const spotlight = document.querySelector(".spotlight");
+
+window.addEventListener("mousemove",(e)=>{
+
+spotlight.style.left=e.clientX+"px";
+spotlight.style.top=e.clientY+"px";
+
+});
+
+const counters=document.querySelectorAll(".nb");
+
+
+counters.forEach(counter=>{
+
+let target=parseInt(counter.innerText);
+
+let n=0;
+
+let interval=setInterval(()=>{
+
+n++;
+
+counter.innerText=n+"+";
+
+if(n>=target)
+clearInterval(interval);
+
+},30);
+});
