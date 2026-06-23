@@ -179,6 +179,21 @@ nav a:hover {
 /* ================================
    BOUTONS
 ================================ */
+.btn-cv {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #2563eb;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: 0.3s ease;
+}
+
+.btn-cv:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
 
 .btn {
   padding: 14px 28px;
